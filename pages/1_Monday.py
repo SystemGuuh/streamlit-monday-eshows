@@ -10,13 +10,12 @@ def crateMondayResquest():
     response_data = makeRequestByQuery("""
             query {
                 boards (ids: 6303323231) {
-                    groups {
-                        title
-                        id
-                    }
                     items_page{
-                            items {
-                                name 
+                            items{
+                                name
+                                group{
+                                    title
+                                }
                             column_values {
                             column {
                                 title
@@ -28,21 +27,19 @@ def crateMondayResquest():
                 }
             }
             """)
-
     return response_data
 
 def processDataFromARequest(response_data):
-    value = response_data["items"][0]["name"]
-    
     # Extrair dados do dicionário para uma lista de dicionários
     dados_formatados = []
     for item in response_data["items"]:
-        dicionario_item = {"Nome": item["name"]}
-        for coluna in item["column_values"]:
-            titulo_coluna = coluna["column"]["title"]
-            texto_coluna = coluna["text"]
-            dicionario_item[titulo_coluna] = texto_coluna
-        dados_formatados.append(dicionario_item)
+        if item["group"]["title"] == "Implantação":
+            dicionario_item = {"Nome": item["name"]}
+            for coluna in item["column_values"]:
+                titulo_coluna = coluna["column"]["title"]
+                texto_coluna = coluna["text"]
+                dicionario_item[titulo_coluna] = texto_coluna
+            dados_formatados.append(dicionario_item)
 
     return dados_formatados
 
@@ -53,14 +50,7 @@ def searchMissingValues(df_temp):
                     if pd.isnull(value) or value == "":
                         st.error(f"Na linha {index}, a coluna '{column}' está vazia ou contém um valor ausente.")
   
-st.set_page_config(page_title="Monday data", page_icon="🗂️")
-
-col1, col2 = st.columns([4,1])
-col1.markdown(f"# Radar de implantação")
-col2.image("./assets/imgs/eshows-logo.png", width=100)
-st.divider()
-
-if df := processDataFromARequest(crateMondayResquest()["data"]["boards"][0]["items_page"]):
+def createFilters(df):
     st.dataframe(df := pd.DataFrame(df), hide_index=True)
 
     with st.sidebar:
@@ -70,25 +60,42 @@ if df := processDataFromARequest(crateMondayResquest()["data"]["boards"][0]["ite
                 showMissingValues = st.checkbox('Reportar campos vazios:', value=False)
             else:
                 st.error("Connection erro, try again later") 
-if(filter == True):
-    st.divider()
-    st.markdown(f"### Dados de {df_column}:")
+    if(filter == True):
+        st.divider()
+        st.markdown(f"### Dados de {df_column}:")
 
-    st.dataframe(df_temp := df.loc[df[df_column] == df_line], hide_index=True)
+        st.dataframe(df_temp := df.loc[df[df_column] == df_line], hide_index=True)
 
-    if(df_column not in {"Farmer", "Hunter Responsável", "Nome contratante"}):
-        col1, col2, col3 = st.columns(3)
-        col1.write(f"Hunter: {df_temp.loc[df_temp.index[0], 'Hunter Responsável']}")
-        col2.write(f"Farmer: {df_temp.loc[df_temp.index[0], 'Farmer']}")
-        col3.write(f"Contratante: {df_temp.loc[df_temp.index[0], 'Nome contratante']}")
+        #printa o nome do Hunter, Farmer e Contratente responsável
+        if(df_column not in {"Farmer", "Hunter Responsável", "Nome contratante"}):
+            col1, col2, col3 = st.columns(3)
+            if {df_temp.loc[df_temp.index[0], 'Hunter Responsável']}:
+                col1.write(f"Hunter: Nenhum")
+            else: col1.write(f"Hunter: {df_temp.loc[df_temp.index[0], 'Hunter Responsável']}")
+            if {df_temp.loc[df_temp.index[0], 'Farmer']}:
+                col2.write(f"Farmer: Nenhum")
+            else: col2.write(f"Farmer: {df_temp.loc[df_temp.index[0], 'Farmer']}")
+            if {df_temp.loc[df_temp.index[0], 'Nome contratante']}:
+                col3.write(f"Contratante: Nenhum")
+            else: col3.write(f"Contratante: {df_temp.loc[df_temp.index[0], 'Nome contratante']}")
 
-    if showMissingValues:
-        if len(df_temp) > 1:
-            selected_line = st.sidebar.selectbox("Selecione uma linha", df_temp['Nome'])
-            df_temp = df_temp[df_temp['Nome'] == selected_line]
+        if showMissingValues:
+            if len(df_temp) > 1:
+                selected_line = st.sidebar.selectbox("Selecione uma linha", df_temp['Nome'])
+                df_temp = df_temp[df_temp['Nome'] == selected_line]
 
-            searchMissingValues(df_temp)
-        else:
-            searchMissingValues(df_temp)
+                searchMissingValues(df_temp)
+            else:
+                searchMissingValues(df_temp)
+
+
+st.set_page_config(page_title="Monday data", page_icon="🗂️")
+col1, col2 = st.columns([4,1])
+col1.markdown(f"# Radar de implantação")
+col2.image("./assets/imgs/eshows-logo.png", width=100)
+st.divider()
+
+if df := processDataFromARequest(crateMondayResquest()["data"]["boards"][0]["items_page"]):
+    createFilters(df)
 else:
     st.error("Select filter to see more informations")   
