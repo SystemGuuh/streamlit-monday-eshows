@@ -1,0 +1,9 @@
+altair
+numpy
+pandas
+pydeck
+streamlit
+matplotlib
+SQLAlchemy
+monday
+streamlit-gsheets
