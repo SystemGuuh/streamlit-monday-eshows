@@ -5,5 +5,5 @@ pydeck
 streamlit
 matplotlib
 sqlalchemy
-monday
 mysqlclient
+monday
