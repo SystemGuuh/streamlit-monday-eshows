@@ -76,16 +76,11 @@ if(filter == True):
             selected_line = st.sidebar.selectbox("Selecione uma linha", df_temp['Nome'])
             df_temp = df_temp[df_temp['Nome'] == selected_line]
 
-            for index, row in df_temp.iterrows():  
-                    for column, value in row.iteritems():  
-                        if pd.isnull(value) or value == "":
-                            st.error(f"Na linha {index}, a coluna '{column}' está vazia ou contém um valor ausente.")
+            for index, row in df_temp.iterrows():
+                for column in df_temp.columns:
+                    value = row[column]
+                    if pd.isnull(value) or value == "":
+                        st.error(f"Na linha {index}, a coluna '{column}' está vazia ou contém um valor ausente.")
+
 else:
-    st.error("Select filter to see more informations")
-
-
-
-    
-
-
-        
+    st.error("Select filter to see more informations")   
