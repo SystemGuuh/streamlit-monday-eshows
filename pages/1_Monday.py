@@ -45,11 +45,22 @@ def processDataFromARequest(response_data):
         dados_formatados.append(dicionario_item)
 
     return dados_formatados
-    
+
+def searchMissingValues(df_temp):
+    for index, row in df_temp.iterrows():
+                for column in df_temp.columns:
+                    value = row[column]
+                    if pd.isnull(value) or value == "":
+                        st.error(f"Na linha {index}, a coluna '{column}' está vazia ou contém um valor ausente.")
+  
 st.set_page_config(page_title="Monday data", page_icon="🗂️")
 
+col1, col2 = st.columns([4,1])
+col1.markdown(f"# Radar de implantação")
+col2.image("./assets/imgs/eshows-logo.png", width=100)
+st.divider()
+
 if df := processDataFromARequest(crateMondayResquest()["data"]["boards"][0]["items_page"]):
-    st.markdown("## Dados do Rada de Implementação")
     st.dataframe(df := pd.DataFrame(df), hide_index=True)
 
     with st.sidebar:
@@ -58,11 +69,11 @@ if df := processDataFromARequest(crateMondayResquest()["data"]["boards"][0]["ite
                 df_line = st.selectbox("Selecione valor", df[df_column].unique().tolist())
                 showMissingValues = st.checkbox('Reportar campos vazios:', value=False)
             else:
-                st.error("Connection erro, try again later")
-
+                st.error("Connection erro, try again later") 
 if(filter == True):
     st.divider()
     st.markdown(f"### Dados de {df_column}:")
+
     st.dataframe(df_temp := df.loc[df[df_column] == df_line], hide_index=True)
 
     if(df_column not in {"Farmer", "Hunter Responsável", "Nome contratante"}):
@@ -76,11 +87,8 @@ if(filter == True):
             selected_line = st.sidebar.selectbox("Selecione uma linha", df_temp['Nome'])
             df_temp = df_temp[df_temp['Nome'] == selected_line]
 
-            for index, row in df_temp.iterrows():
-                for column in df_temp.columns:
-                    value = row[column]
-                    if pd.isnull(value) or value == "":
-                        st.error(f"Na linha {index}, a coluna '{column}' está vazia ou contém um valor ausente.")
-
+            searchMissingValues(df_temp)
+        else:
+            searchMissingValues(df_temp)
 else:
     st.error("Select filter to see more informations")   

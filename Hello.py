@@ -1,27 +1,22 @@
 import streamlit as st
-from streamlit.logger import get_logger
-import subprocess
 
-LOGGER = get_logger(__name__)
-
-#datatest-apps
 def run():
-
     st.set_page_config(
         page_title="Eshows Data",
         page_icon="🎤",
+        layout="wide"
     )
-
-    st.write("# Rada de implementação")
+    col1, col2 = st.columns([4,1])
+    col2.image("./assets/imgs/eshows-logo.png", width=100) 
+    col1.write("# Radar de Implementação")
 
     st.markdown(
         """
-        Visualização de dados do radar de implementação:
-        - Database: page connected to our database, its possible to run querys and analise data
-        - Monday: page to see data colected from monday API(flow de radar)
-    """
+        #### Visualização dos dados do Radar de Implementação:
+        - **Database:** Página conectada ao nosso banco de dados, onde é possível visualizar dados em tabelas.
+        - **Monday:** Página para visualizar dados coletados da API do Monday (fluxo do radar).
+        """
     )
-
 
 if __name__ == "__main__":
     run()

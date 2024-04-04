@@ -33,7 +33,11 @@ def consultContratantes(conn):
     consultBarChart(GET_CACHE_MEDIO_OPORTUNIDADES, conn)
 
 st.set_page_config(page_title="Database", page_icon="📊")
-st.markdown("# Analisando dados do banco Eshows")
+col1, col2 = st.columns([4,1])
+col2.image("./assets/imgs/eshows-logo.png", width=100) 
+col1.markdown("# Analisando dados do banco Eshows")
+st.divider()
+
 st.sidebar.header("Database")
 
 with st.sidebar:
