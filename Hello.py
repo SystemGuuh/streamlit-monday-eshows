@@ -17,7 +17,7 @@ def installPkgConfig():
 
 #datatest-apps
 def run():
-    #installPkgConfig()
+    installPkgConfig()
 
     st.set_page_config(
         page_title="Eshows Data",
