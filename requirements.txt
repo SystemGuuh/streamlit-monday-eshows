@@ -4,6 +4,5 @@ pandas
 pydeck
 streamlit
 matplotlib
-sqlalchemy
-mysqlclient
 monday
+mysql-connector-python
