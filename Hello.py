@@ -4,23 +4,8 @@ import subprocess
 
 LOGGER = get_logger(__name__)
 
-def installPkgConfig():
-    # Define the commands to install pkg-config and mysqlclient
-    commands = ["sudo apt install pkg-config", "pip install mysqlclient"]
-
-    for command in commands:
-        try:
-            subprocess.run(command, shell=True, check=True)
-            if "pkg-config" in command:
-                print("pkg-config installed successfully.")
-            elif "mysqlclient" in command:
-                print("mysqlclient installed successfully.")
-        except subprocess.CalledProcessError as e:
-            print(f"Error executing command '{command}': {e}")
-
 #datatest-apps
 def run():
-    installPkgConfig()
 
     st.set_page_config(
         page_title="Eshows Data",
