@@ -4,6 +4,6 @@ pandas
 pydeck
 streamlit
 matplotlib
-SQLAlchemy
+sqlalchemy
+mysqlclient
 monday
-streamlit-gsheets
