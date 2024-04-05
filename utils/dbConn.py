@@ -1,5 +1,6 @@
 import mysql.connector
 import streamlit as st
+import pandas as pd
 
 def get_mysql_connection():
     mysql_config = st.secrets["mysql"]
@@ -26,3 +27,7 @@ def execute_query(query, conn):
     
     cursor.close()
     return result, column_names
+
+def getDfFromQuery(consulta, conn):
+    result, column_names = execute_query(consulta, conn)
+    return pd.DataFrame(result, columns=column_names)

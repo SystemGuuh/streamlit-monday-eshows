@@ -13,10 +13,29 @@ def run():
     st.markdown(
         """
         #### Visualização dos dados do Radar de Implementação:
-        - **Database:** Página conectada ao nosso banco de dados, onde é possível visualizar dados em tabelas.
-        - **Monday:** Página para visualizar dados coletados da API do Monday (fluxo do radar).
+        - **Visão Geral do Monday:** Página para visualizar dados coletados do Radar.
+        - **Hunter:** Página para visualizar dados pertinentes a Hunters.
+        - **Farmer:** Página para visualizar dados pertinentes a Farmers.
+        - **Implementação:** Página para visualizar dados de implantantação.
         """
     )
 
 if __name__ == "__main__":
     run()
+
+
+
+
+# Farmer
+# Cadastro de show padrão
+# 
+
+# Implantação
+# Cadastro de show padrão
+# Recebeu programação
+# Perfi spaces
+# Ativou controladoria
+
+# Artistas
+# Onboarda artistas
+# Prospecção feita
