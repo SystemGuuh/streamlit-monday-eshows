@@ -3,7 +3,7 @@ import requests
 import streamlit as st
 from monday import MondayClient
 import pandas as pd
-from utils.dbConn import *
+from utils.dbconnect import *
 from utils.queries import GET_RADAR_FROM_BD
 
 def load_api_key():
@@ -72,7 +72,7 @@ def cleanBdDataUsingMonday(mondayDf, bdDf):
         return cleanBdDf
     except Exception as e:
         st.error('Algo deu errado, há valores incongruentes no monday.')
-        return -1
+        return pd.DataFrame()
 
 def searchMissingValues(df):
     for index, row in df.iterrows():

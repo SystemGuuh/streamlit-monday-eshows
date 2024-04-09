@@ -14,9 +14,6 @@ st.markdown("### Radar do Monday")
 radarMondaydf = getMondayDataframe()
 st.dataframe(radarMondaydf, hide_index=True)
 
-
-radarBdDf = getRadarDataFromLocal()
-
 st.markdown('## Radar do banco de dados')
-radarBdDfClean = cleanBdDataUsingMonday(radarMondaydf, radarBdDf)
+radarBdDfClean = cleanBdDataUsingMonday(getMondayDataframe(), getRadarDataFromLocal())
 st.dataframe(radarBdDfClean, hide_index=True)
