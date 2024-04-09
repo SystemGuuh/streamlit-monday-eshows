@@ -2,7 +2,6 @@ import streamlit as st
 from utils.monday import *
 from utils.queries import *
 import pandas as pd
-from datetime import datetime
 
 def getHunterData(radarMondaydf):
     return radarMondaydf[['ID EPM', 'Nome', 'Relevância do cliente', 
