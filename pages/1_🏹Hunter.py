@@ -2,6 +2,7 @@ import streamlit as st
 from utils.monday import *
 from utils.queries import *
 import pandas as pd
+from datetime import datetime
 
 def getHunterData(radarMondaydf):
     return radarMondaydf[['ID EPM', 'Nome', 'Relevância do cliente', 
@@ -47,6 +48,7 @@ def printStopedItens(df, hunter):
                 st.markdown(f'- "**{nome}**" está com o campo "**{coluna}**" parado.')
             valor_anterior = valor.lower()
 
+#temminal função
 def showDataByDayabase(df, id_casa, nome_casa):
     st.divider()
 
@@ -60,13 +62,14 @@ def showDataByDayabase(df, id_casa, nome_casa):
     df = df.query(f'ID_CASA == {id_casa_str}')
     df = df.drop(columns=['ID_CASA', 'CASA', 'STATUS_COMPANY'])
     
-    #condição para mostrar os dados
-    #tem que ter primeiro show batendo com o monday
-    #casting ter que ver se tá ok, sinal vermelho se tiver 0
-    #show lançado do banco tem que estar igual ao início da parceria
-    #controladoria tem que ser diferente de 0 antes da parceria
-    #situação cadastral - incompleto adicionar campo para dados faltando
-    #adcionar campo para comentário do hunter
+    # aprimorar filtros da tabela
+    # condição para mostrar os dados:
+    #### tem que ter primeiro show batendo com o monday
+    #### casting ter que ver se tá ok, sinal vermelho se tiver 0
+    #### show lançado do banco tem que estar igual ao início da parceria
+    #### controladoria tem que ser diferente de 0 antes da parceria
+    # situação cadastral - incompleto adicionar campo para dados faltando
+    # adcionar campo para comentário do hunter
     col1, col2, col3 = st.columns(3)
     with col1:
         if df.empty or pd.isna(df['CASTING_CADASTRADO'].iloc[0]):
