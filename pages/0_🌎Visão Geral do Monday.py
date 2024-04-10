@@ -51,7 +51,7 @@ st.set_page_config(page_title="Monday Global Data", page_icon="🗂️")
 col1, col2 = st.columns([4,1])
 col1.markdown(f"# Radar de implantação")
 col2.image("./assets/imgs/eshows-logo.png", width=100)
-if st.button("Rodar Query Radar", type="secondary"): getRadarDataFromDatabse()
+if st.button("Atualizar dados BD", type="secondary"): getRadarDataFromDatabse()
 
 # nesse caso radar é uma lista, não um dataframe do tipo pandas
 radarMondaydf = getMondayDataframe()

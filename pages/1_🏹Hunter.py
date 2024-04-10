@@ -169,13 +169,14 @@ st.set_page_config(page_title="Monday Hunter Data", page_icon="🏹")
 col1, col2 = st.columns([4,1])
 col1.markdown(f"# Radar de implantação")
 col2.image("./assets/imgs/eshows-logo.png", width=100)
+if st.button("Atualizar dados BD", type="secondary"): getRadarDataFromDatabse()
 
 
 radarMondaydf = getHunterData(getMondayDataframe())
 
 if  not radarMondaydf.empty:
     with st.sidebar:
-            if (filterHunter := st.selectbox("Selecione Hunter", radarMondaydf['Hunter Responsável'].unique().tolist(), index=None,placeholder="Hunter")):
+            if (filterHunter := st.selectbox("Selecione um Hunter", radarMondaydf['Hunter Responsável'].unique().tolist(), index=None,placeholder="Hunter")):
                 filterHause = st.selectbox("Dados de uma casa", radarMondaydf[radarMondaydf['Hunter Responsável'] == filterHunter]['Nome'].unique().tolist(), index=None, placeholder="Selecione a casa")
 
     if filterHunter:
