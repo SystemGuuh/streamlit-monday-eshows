@@ -60,7 +60,13 @@ def processDataFromARequest():
 
 def getMondayDataframe():
     try:
-        return pd.DataFrame(processDataFromARequest())
+        df = pd.DataFrame(processDataFromARequest())
+
+        #removing ID EPM without value
+        df['ID EPM'] = df['ID EPM'].replace('', pd.NA)
+        df = df.dropna(subset=['ID EPM'])
+
+        return df
     except Exception as e:
         st.error(f"Ocorreu um erro ao tentar coletar dados")
         return pd.DataFrame() 

@@ -2,7 +2,7 @@ import streamlit as st
 from utils.monday import *
 from utils.queries import *
 import pandas as pd
-from datetime import datetime
+from datetime import datetime, date
 
 def getHunterData(radarMondaydf):
     return radarMondaydf[['ID EPM', 'Nome', 'Relevância do cliente', 
@@ -17,13 +17,10 @@ def getHunterData(radarMondaydf):
                                 'Estrutura da programação (dias da semana)', 
                                 'Volume (qts dias a eshows terá na casa?)',
                                 'Cliente irá atuar de forma independente?',
-                                'Propostas lançadas?', 'Hunter Responsável']]
+                                'Propostas lançadas?', 'Observação Hunting', 'Hunter Responsável']]
 
 def createView(df, hunter):
      return df[df['Hunter Responsável'] == hunter].reset_index(drop=True)
-
-def checkNextSteps(df):
-     searchMissingValues(df)
 
 def checkStopedItens(df, hunter):
     try:
@@ -39,18 +36,42 @@ def checkStopedItens(df, hunter):
 
 def printStopedItens(df, hunter):
     df = df[df['Hunter Responsável'] == hunter]
-    for indice, linha in df.iterrows():
-        valor_anterior = None
-        for coluna in df.columns[11:24]:
-            valor = linha[coluna]
-            if str(valor).lower() == 'parado' and valor_anterior != 'não aplica':
-                nome = linha['Nome']
-                st.markdown(f'- "**{nome}**" está com o campo "**{coluna}**" parado.')
-            valor_anterior = valor.lower()
-
-#temminal função
-def showDataByDayabase(df, id_casa, nome_casa):
-    st.divider()
+    #se datafrma contem mais de uma linha, vamos printar so a primeira demanda de cada casa
+    if len(df) > 1:
+        for indice, linha in df.iterrows():
+            valor_anterior = None
+            for coluna in df.columns[11:24]:
+                valor = linha[coluna]
+                if valor is None or str(valor) == '':
+                    nome = linha['Nome']
+                    st.markdown(f'- "**{nome}**" está com o campo vazio e precisa ser preenchido.')
+                    valor_anterior = None
+                    break
+                elif str(valor).lower() == 'parado' and valor_anterior != 'não aplica':
+                    nome = linha['Nome']
+                    st.markdown(f'- "**{nome}**" está com o campo "**{coluna}**" parado.')
+                    valor_anterior = valor.lower()
+                    break
+                else: valor_anterior = valor.lower()
+    #senão, mostramos todas as demandar de uma casa
+    else:
+        for indice, linha in df.iterrows():
+            valor_anterior = None
+            for coluna in df.columns[11:24]:
+                valor = linha[coluna]
+                if valor is None or str(valor) == '':
+                    nome = linha['Nome']
+                    st.markdown(f'- "**{nome}**" está com o campo vazio e precisa ser preenchido.')
+                    valor_anterior = None
+                    continue
+                elif str(valor).lower() == 'parado' and valor_anterior != 'não aplica':
+                    nome = linha['Nome']
+                    st.markdown(f'- "**{nome}**" está com o campo "**{coluna}**" parado.')
+                valor_anterior = valor.lower()
+                
+def showDataByDayabase(df, dfMonday, id_casa, nome_casa):
+    controladoria=None
+    day=None; day2=None
 
     # trata casas desativadas
     if df['CASA_ATIVA'].iloc[0] != 1:
@@ -62,41 +83,80 @@ def showDataByDayabase(df, id_casa, nome_casa):
     df = df.query(f'ID_CASA == {id_casa_str}')
     df = df.drop(columns=['ID_CASA', 'CASA', 'STATUS_COMPANY'])
     
-    # aprimorar filtros da tabela
-    # condição para mostrar os dados:
-    #### tem que ter primeiro show batendo com o monday
-    #### casting ter que ver se tá ok, sinal vermelho se tiver 0
-    #### show lançado do banco tem que estar igual ao início da parceria
-    #### controladoria tem que ser diferente de 0 antes da parceria
-    # situação cadastral - incompleto adicionar campo para dados faltando
-    # adcionar campo para comentário do hunter
     col1, col2, col3 = st.columns(3)
     with col1:
         if df.empty or pd.isna(df['CASTING_CADASTRADO'].iloc[0]):
             st.write('Casting: pendente...')
         else:
-            st.write('Casting:', df['CASTING_CADASTRADO'].iloc[0])
+            st.write('Casting:', str(df['CASTING_CADASTRADO'].iloc[0]))
     with col2:
         if df.empty or pd.isna(df['USUARIOS_ATIVOS'].iloc[0]):
             st.write('Usuários ativos: pendente...')
         else:
-            st.write('Usuários ativos:', df['USUARIOS_ATIVOS'].iloc[0])
+            st.write('Usuários ativos:', str(df['USUARIOS_ATIVOS'].iloc[0]))
     with col3:
         if df.empty or pd.isna(df['CONTROLADORIA_ESHOWS'].iloc[0]):
             st.write('Controladoria: pendente...')
+            controladoria=0
         else:
-            st.write('Controladoria:', df['CONTROLADORIA_ESHOWS'].iloc[0])
+            st.write('Controladoria:', str(df['CONTROLADORIA_ESHOWS'].iloc[0]))
+            controladoria=int(df['CONTROLADORIA_ESHOWS'].iloc[0])
+    
+    col4, col5, col6 = st.columns(3)
+    with col4:
+        if dfMonday['GMV estimado'].empty or pd.isna(dfMonday['GMV estimado'].iloc[0]):
+            st.write('GMV: pendente...')
+        else:
+            st.write('GMV:', dfMonday['GMV estimado'].iloc[0])
+    with col5:
+        if dfMonday['Login criado?'].empty or pd.isna(dfMonday['Login criado?'].iloc[0]):
+            st.write('Login criado precisa ser preenchido')
+        else:
+            st.write('Login criado?', dfMonday['Login criado?'].iloc[0])
+    with col6:
+        if dfMonday['Volume (qts dias a eshows terá na casa?)'].empty or pd.isna(dfMonday['Volume (qts dias a eshows terá na casa?)'].iloc[0]):
+            st.write('Volume: precisa ser preenchido')
+        else:
+            st.write('Volume de shows:', dfMonday['Volume (qts dias a eshows terá na casa?)'].iloc[0])
 
-    #formatando data se tiver
+    #formatando data do primeiro show, se tiver
+    col7, col8 = st.columns(2)
     if df.empty or pd.isna(df['PRIMEIRO_SHOW'].iloc[0]):
-        st.write('Primeiro Show: pendente...')
+        col7.write('Primeiro Show no BD: pendente...')
     else:
-        data_str = df['PRIMEIRO_SHOW'].iloc[0]
-        data_obj = datetime.strptime(data_str, "%Y-%m-%d %H:%M:%S")
-        day = data_obj.strftime("%d/%m/%Y")
-        time = data_obj.strftime("%H:%M:%S")
-        st.write('Primeiro Show:', day, ' às ', time)
+        with col7:
+            data_str = df['PRIMEIRO_SHOW'].iloc[0]
+            data_obj = datetime.strptime(data_str, "%Y-%m-%d %H:%M:%S")
+            day = data_obj.strftime("%d/%m/%Y")
+            time = data_obj.strftime("%H:%M:%S")
+            st.write('Primeiro Show no BD:', day, ' às ', time)
+    
+    if dfMonday.empty or pd.isna(dfMonday['Início da parceria'].iloc[0]):
+        col8.write('Primeiro Show no Monday: pendente...')
+    else:
+        with col8:
+            data_str = dfMonday['Início da parceria'].iloc[0]
+            data_obj = datetime.strptime(data_str, "%Y-%m-%d")
+            day2 = data_obj.strftime("%d/%m/%Y")
+            st.write('Primeiro Show no Monday:', day2)
 
+    #verificando casting
+    if (str(df['CASTING_CADASTRADO'].iloc[0] == '0')):
+        st.error("Casting igual a 0 é um problema.")
+    #verificar se os dados batem ou se há valores nulos
+    if day != day2:
+        st.error("Primeiro show e início da parceria apresentam valores diferentes")
+    #verificando controladoria em relação a data atual(so da pra fazer se a data tiver cadastrada corretamente)
+    else:
+        today = date.today().strftime("%d/%m/%Y")
+        if today < day and controladoria == 0:
+            #calcula quando dias faltam
+            today_datetime = datetime.strptime(today, "%d/%m/%Y")
+            day_datetime = datetime.strptime(day, "%d/%m/%Y")
+            remaining = (day_datetime - today_datetime).days
+
+            st.error(f"Controladoria precisa ser preenchido antes do dia {day}, faltam {remaining} dias.")
+    
 st.set_page_config(page_title="Monday Hunter Data", page_icon="🏹")
 col1, col2 = st.columns([4,1])
 col1.markdown(f"# Radar de implantação")
@@ -118,13 +178,30 @@ if  not radarMondaydf.empty:
 
         if(checkStopedItens(radarMondaydf ,filterHunter)):
             st.divider()
-            st.markdown(f"### ⚠️ Itens para resolver")
+            st.markdown(f"### Próximos passos de cada casa")
             printStopedItens(radarMondaydf ,filterHunter)
 
 
         if filterHause:
-            checkNextSteps(df[df['Nome']==filterHause])
-            showDataByDayabase(cleanBdDataUsingMonday(radarMondaydf, getRadarDataFromLocal()), df.loc[df['Nome'] == filterHause, 'ID EPM'].iloc[0], filterHause)
+            tab1, tab2= st.tabs(["Pendências", "Situação Cadastral"])
+            with tab1:
+                showDataByDayabase(cleanBdDataUsingMonday(radarMondaydf, getRadarDataFromLocal()), radarMondaydf[radarMondaydf['Nome'] == filterHause],df.loc[df['Nome'] == filterHause, 'ID EPM'].iloc[0], filterHause)
+
+                if(checkStopedItens(radarMondaydf[radarMondaydf['Nome']  == filterHause],filterHunter)):
+                    with st.expander("⚠️ Lista de pendências para resolver"):
+                        printStopedItens(radarMondaydf[radarMondaydf['Nome'] == filterHause] ,filterHunter)
+                else:
+                    st.success("Essa casa não tem pendências no Monday para resolver!!")
+            with tab2:
+                st.write('fazendo')
+                # situação cadastral - incompleto adicionar campo para dados faltando
+                # adcionar campo para comentário do hunter
+        
+        else:
+            st.warning('Selecione dados de uma casa para ver mais campos e próximos passos.')
+    
+    
+
     else:
         st.divider()
         st.markdown("### Radar do Monday")
