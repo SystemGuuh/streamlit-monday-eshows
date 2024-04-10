@@ -159,11 +159,11 @@ def showDataByDayabase(df, dfMonday, id_casa, nome_casa):
 
 def showMissingRegisterValuesFromDatabase(id):
     df = getMissingRegisterValue(id)
-    st.markdown("#### Dados incompletos da casa:")
     missingValues = df['ERRO_CADASTRO'].astype(str).iloc[0]
     missingValues = missingValues.split('-')
-    for value in missingValues:
-        st.markdown(f'{value}')
+    with st.expander("Ver dados incompletos"):
+        for value in missingValues:
+            st.error(value)
 
 st.set_page_config(page_title="Monday Hunter Data", page_icon="🏹")
 col1, col2 = st.columns([4,1])
@@ -203,7 +203,7 @@ if  not radarMondaydf.empty:
             with tab2:
                 stringObs = radarMondaydf.loc[radarMondaydf['Nome'] == filterHause, 'Observação Hunting'].astype(str).iloc[0]
                 st.markdown("#### Observação do hunter:")
-                st.write(stringObs)
+                st.info(stringObs)
                 showMissingRegisterValuesFromDatabase(radarMondaydf.loc[radarMondaydf['Nome'] == filterHause, 'ID EPM'].astype(int).iloc[0])
         
         else:
