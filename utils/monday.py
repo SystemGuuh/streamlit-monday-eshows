@@ -93,6 +93,13 @@ def getRadarDataFromDatabse():
         radarBdDf = getDfFromQuery(GET_RADAR_FROM_BD, conn)
         radarBdDf.to_csv('./assets/csvs/bdRadar.csv', index=False)
 
+def getMissingRegisterValue(id):
+    conn = get_mysql_connection()
+    if conn.is_connected():
+        query= f"SELECT C.ID AS ID_CASA, C.OBS_ERRO_CADASTRO AS ERRO_CADASTRO FROM T_COMPANIES C WHERE C.ID = {id}"
+        df = getDfFromQuery(query, conn)
+        return df
+    
 def getRadarDataFromLocal():
     return pd.read_csv('./assets/csvs/bdRadar.csv')
 

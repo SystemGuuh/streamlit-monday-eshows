@@ -156,7 +156,15 @@ def showDataByDayabase(df, dfMonday, id_casa, nome_casa):
             remaining = (day_datetime - today_datetime).days
 
             st.error(f"Controladoria precisa ser preenchido antes do dia {day}, faltam {remaining} dias.")
-    
+
+def showMissingRegisterValuesFromDatabase(id):
+    df = getMissingRegisterValue(id)
+    st.markdown("#### Dados incompletos da casa:")
+    missingValues = df['ERRO_CADASTRO'].astype(str).iloc[0]
+    missingValues = missingValues.split('-')
+    for value in missingValues:
+        st.markdown(f'{value}')
+
 st.set_page_config(page_title="Monday Hunter Data", page_icon="🏹")
 col1, col2 = st.columns([4,1])
 col1.markdown(f"# Radar de implantação")
@@ -193,9 +201,10 @@ if  not radarMondaydf.empty:
                 else:
                     st.success("Essa casa não tem pendências no Monday para resolver!!")
             with tab2:
-                st.write('fazendo')
-                # situação cadastral - incompleto adicionar campo para dados faltando
-                # adcionar campo para comentário do hunter
+                stringObs = radarMondaydf.loc[radarMondaydf['Nome'] == filterHause, 'Observação Hunting'].astype(str).iloc[0]
+                st.markdown("#### Observação do hunter:")
+                st.write(stringObs)
+                showMissingRegisterValuesFromDatabase(radarMondaydf.loc[radarMondaydf['Nome'] == filterHause, 'ID EPM'].astype(int).iloc[0])
         
         else:
             st.warning('Selecione dados de uma casa para ver mais campos e próximos passos.')
