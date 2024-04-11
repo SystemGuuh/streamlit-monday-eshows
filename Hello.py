@@ -33,11 +33,7 @@ if __name__ == "__main__":
 # Cadastro de show padrão
 # 
 
-# Implantação
-# Cadastro de show padrão
-# Recebeu programação
-# Perfi spaces
-# Ativou controladoria
+
 
 # Artistas
 # Onboarda artistas

@@ -20,9 +20,6 @@ def getFarmerData(radarMondaydf):
                                 'Cliente irá atuar de forma independente?',
                                 'Propostas lançadas?', 'Observação Hunting', 'Farmer']]
 
-def createView(df, farmer):
-     return df[df['Farmer'] == farmer].reset_index(drop=True)
-
 def checkStopedItens(df, farmer):
     try:
         df = df[df['Farmer'] == farmer]
@@ -183,13 +180,15 @@ if  not radarMondaydf.empty:
     if filterFarmer:
         st.divider()
         st.markdown(f"### Radar do {filterFarmer}")
-        df = createView(radarMondaydf ,filterFarmer)
+        df = radarMondaydf[radarMondaydf['Farmer'] == filterFarmer].reset_index(drop=True)
         st.dataframe(df, hide_index=True)
 
+        st.divider()
         if(checkStopedItens(radarMondaydf ,filterFarmer)):
-            st.divider()
             st.markdown(f"### Próximos passos de cada casa")
             printStopedItens(radarMondaydf ,filterFarmer)
+        else:
+            st.success("Parece que tudo completo no radar dessa casas!")
 
 
         if filterHause:

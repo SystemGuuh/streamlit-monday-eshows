@@ -19,9 +19,6 @@ def getHunterData(radarMondaydf):
                                 'Cliente irá atuar de forma independente?',
                                 'Propostas lançadas?', 'Observação Hunting', 'Hunter Responsável']]
 
-def createView(df, hunter):
-     return df[df['Hunter Responsável'] == hunter].reset_index(drop=True)
-
 def checkStopedItens(df, hunter):
     try:
         df = df[df['Hunter Responsável'] == hunter]
@@ -34,6 +31,7 @@ def checkStopedItens(df, hunter):
         st.error("Opa, valor inconsistente ou não númerico encontrado no entre colunas 11 e 24 do dataframe")
         return False
 
+#adicionar dropdown para pendências de casas mostrando o valor de quantas pedências tem
 def printStopedItens(df, hunter):
     df = df[df['Hunter Responsável'] == hunter]
     #se datafrma contem mais de uma linha, vamos printar so a primeira demanda de cada casa
@@ -104,6 +102,8 @@ def showDataByDayabase(df, dfMonday, id_casa, nome_casa):
     
     col4, col5, col6 = st.columns(3)
     with col4:
+        #remover gmv
+        #printar incompleto se tiver dados faltando 'STATUS_CADASTRADO'
         if dfMonday['GMV estimado'].empty or pd.isna(dfMonday['GMV estimado'].iloc[0]):
             st.write('GMV: pendente...')
         else:
@@ -140,13 +140,15 @@ def showDataByDayabase(df, dfMonday, id_casa, nome_casa):
             day2 = data_obj.strftime("%d/%m/%Y")
             st.write('Primeiro Show no Monday:', day2)
 
+    #Regras de verificação do status
     #verificando casting
+    #se cadastro/onboard de artista for != de não aplicável casting precisa ser > 0
     if (str(df['CASTING_CADASTRADO'].iloc[0] == '0')):
         st.error("Casting igual a 0 é um problema.")
-    #verificar se os dados batem ou se há valores nulos
+    
+    #verifica os dados das datas
     if day != day2:
         st.error("Primeiro show e início da parceria apresentam valores diferentes")
-    #verificando controladoria em relação a data atual(so da pra fazer se a data tiver cadastrada corretamente)
     else:
         today = date.today().strftime("%d/%m/%Y")
         if today < day and controladoria == 0:
@@ -156,6 +158,10 @@ def showDataByDayabase(df, dfMonday, id_casa, nome_casa):
             remaining = (day_datetime - today_datetime).days
 
             st.error(f"Controladoria precisa ser preenchido antes do dia {day}, faltam {remaining} dias.")
+        #adicionar else case: passou a data
+        #se não tiver show no BD e tem no Monday: primeiro show não lançado
+        #verificar o sim do login criado com o BD: 'USUARIOS_ATIVOS' 
+        #
 
 def showMissingRegisterValuesFromDatabase(id):
     df = getMissingRegisterValue(id)
@@ -170,6 +176,7 @@ col1, col2 = st.columns([4,1])
 col1.markdown(f"# Radar de implantação")
 col2.image("./assets/imgs/eshows-logo.png", width=100)
 if st.button("Atualizar dados BD", type="secondary"): getRadarDataFromDatabse()
+st.divider()
 
 
 radarMondaydf = getHunterData(getMondayDataframe())
@@ -180,17 +187,18 @@ if  not radarMondaydf.empty:
                 filterHause = st.selectbox("Dados de uma casa", radarMondaydf[radarMondaydf['Hunter Responsável'] == filterHunter]['Nome'].unique().tolist(), index=None, placeholder="Selecione a casa")
 
     if filterHunter:
-        st.divider()
         st.markdown(f"### Radar do {filterHunter}")
-        df = createView(radarMondaydf ,filterHunter)
+        df = radarMondaydf[radarMondaydf['Hunter Responsável'] == filterHunter].reset_index(drop=True)
         st.dataframe(df, hide_index=True)
 
+        st.divider()
         if(checkStopedItens(radarMondaydf ,filterHunter)):
-            st.divider()
             st.markdown(f"### Próximos passos de cada casa")
             printStopedItens(radarMondaydf ,filterHunter)
+        else:
+            st.success("Parece que tudo completo no radar dessa casas!")
 
-
+        #rodar query para pegar dados do BD com o ID da casa
         if filterHause:
             tab1, tab2= st.tabs(["Pendências", "Situação Cadastral"])
             with tab1:
@@ -213,7 +221,6 @@ if  not radarMondaydf.empty:
     
 
     else:
-        st.divider()
         st.markdown("### Radar do Monday")
         st.dataframe(radarMondaydf, hide_index=True)
 else: 
