@@ -16,7 +16,7 @@ pip install -r requirements.txt
 Clone o repositório e instale as dependências:
 
 ```
-git clone https://github.com/seu-usuario/streamlit-monday-eshows.git
+git clone {link do repositório}
 cd streamlit-monday-eshows
 pip install -r requirements.txt
 ```
