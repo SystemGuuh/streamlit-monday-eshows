@@ -5,16 +5,16 @@ import pandas as pd
 from datetime import datetime, date
 
 def getHunterData(radarMondaydf):
-    return radarMondaydf[['ID EPM', 'Nome', 'Relevância do cliente', 
-                               'Nome contratante', 'E-mail do contratante', 
-                               'Cidade do Estabelecimento', 'GMV estimado', 
-                               'Início da parceria', 'Tipo de negociação', 'Carência?', 
+    return radarMondaydf[['ID EPM', 'Nome', 'Relevância do cliente',
+                               'Nome contratante', 'E-mail do contratante',
+                               'Cidade do Estabelecimento', 'GMV estimado',
+                               'Início da parceria', 'Tipo de negociação', 'Carência?',
                                'Carência até (data)', 'Formulário Hub', 'Grupo no Whatsapp',
-                                'Companie criado?', 'Criação da marca', 'Login criado?', 
-                                'Cadastro de show padrão (QUEM VAI FAZER?)', 
-                                'Coletar contatos de artista', 'Coletar programação', 
-                                'Recebi programação do Hunter?', 
-                                'Estrutura da programação (dias da semana)', 
+                                'Companie criado?', 'Criação da marca', 'Login criado?',
+                                'Cadastro de show padrão',
+                                'Coletar contatos de artista', 'Coletar programação',
+                                'Recebi programação do Hunter?',
+                                'Estrutura da programação (dias da semana)',
                                 'Volume (qts dias a eshows terá na casa?)',
                                 'Cliente irá atuar de forma independente?',
                                 'Propostas lançadas?', 'Observação Hunting', 'Hunter Responsável']]
@@ -31,42 +31,39 @@ def checkStopedItens(df, hunter):
         st.error("Opa, valor inconsistente ou não númerico encontrado no entre colunas 11 e 24 do dataframe")
         return False
 
-#adicionar dropdown para pendências de casas mostrando o valor de quantas pedências tem
-def printStopedItens(df, hunter):
-    df = df[df['Hunter Responsável'] == hunter]
-    #se datafrma contem mais de uma linha, vamos printar so a primeira demanda de cada casa
-    if len(df) > 1:
-        for indice, linha in df.iterrows():
-            valor_anterior = None
-            for coluna in df.columns[11:24]:
-                valor = linha[coluna]
-                if valor is None or str(valor) == '':
-                    nome = linha['Nome']
-                    st.markdown(f'- "**{nome}**" está com o campo vazio e precisa ser preenchido.')
-                    valor_anterior = None
-                    break
-                elif str(valor).lower() == 'parado' and valor_anterior != 'não aplica':
-                    nome = linha['Nome']
-                    st.markdown(f'- "**{nome}**" está com o campo "**{coluna}**" parado.')
-                    valor_anterior = valor.lower()
-                    break
-                else: valor_anterior = valor.lower()
-    #senão, mostramos todas as demandar de uma casa
-    else:
-        for indice, linha in df.iterrows():
-            valor_anterior = None
-            for coluna in df.columns[11:24]:
-                valor = linha[coluna]
-                if valor is None or str(valor) == '':
-                    nome = linha['Nome']
-                    st.markdown(f'- "**{nome}**" está com o campo vazio e precisa ser preenchido.')
-                    valor_anterior = None
-                    continue
-                elif str(valor).lower() == 'parado' and valor_anterior != 'não aplica':
-                    nome = linha['Nome']
-                    st.markdown(f'- "**{nome}**" está com o campo "**{coluna}**" parado.')
-                valor_anterior = valor.lower()
-                
+def printStopedItens(df):
+    df = df.reset_index(drop=True)
+    stopedItensCount = []
+    stopedItensValues = []
+
+    #calcula campos parados
+    for indice, linha in df.iterrows():
+        valor_anterior = None
+        count =0
+        for coluna in df.columns[11:24]:
+            valor = linha[coluna]
+            if valor is None or str(valor) == '':
+                nome = linha['Nome']
+                stopedItensValues.append(f'"**{nome}**" está com o campo vazio e precisa ser preenchido.\n')
+                count += 1
+                valor_anterior = None
+                continue
+            elif str(valor).lower() == 'parado' and valor_anterior != 'não aplica':
+                nome = linha['Nome']
+                stopedItensValues.append(f'"**{nome}**" está com o campo "**{coluna}**" parado.\n')
+                count += 1
+            valor_anterior = valor.lower()
+        stopedItensCount.append(count)
+
+    #printa campos parados
+    aux = 0
+    for indice, linha in df.iterrows():
+        if stopedItensCount[indice] > 0:
+            with st.expander(f"⚠️ **{linha['Nome']}**: {stopedItensCount[indice]} itens pendentes"):
+                st.write('\n'.join(map(str, stopedItensValues[aux:stopedItensCount[indice]])))
+            aux = stopedItensCount[indice]
+
+
 def showDataByDayabase(df, dfMonday, id_casa, nome_casa):
     controladoria=None
     day=None; day2=None
@@ -75,12 +72,12 @@ def showDataByDayabase(df, dfMonday, id_casa, nome_casa):
     if df['CASA_ATIVA'].iloc[0] != 1:
         st.markdown('### Status atuais da casa: <span style="color:red">desativada</span>', unsafe_allow_html=True)
         return -1
-    
+
     st.markdown(f'### Status atuais da casa {nome_casa}')
     id_casa_str = str(id_casa)  # Convertendo id_casa para string
     df = df.query(f'ID_CASA == {id_casa_str}')
     df = df.drop(columns=['ID_CASA', 'CASA', 'STATUS_COMPANY'])
-    
+
     col1, col2, col3 = st.columns(3)
     with col1:
         if df.empty or pd.isna(df['CASTING_CADASTRADO'].iloc[0]):
@@ -99,7 +96,7 @@ def showDataByDayabase(df, dfMonday, id_casa, nome_casa):
         else:
             st.write('Controladoria:', str(df['CONTROLADORIA_ESHOWS'].iloc[0]))
             controladoria=int(df['CONTROLADORIA_ESHOWS'].iloc[0])
-    
+
     col4, col5, col6 = st.columns(3)
     with col4:
         #remover gmv
@@ -130,7 +127,7 @@ def showDataByDayabase(df, dfMonday, id_casa, nome_casa):
             day = data_obj.strftime("%d/%m/%Y")
             time = data_obj.strftime("%H:%M:%S")
             st.write('Primeiro Show no BD:', day, ' às ', time)
-    
+
     if dfMonday.empty or pd.isna(dfMonday['Início da parceria'].iloc[0]):
         col8.write('Primeiro Show no Monday: pendente...')
     else:
@@ -145,7 +142,7 @@ def showDataByDayabase(df, dfMonday, id_casa, nome_casa):
     #se cadastro/onboard de artista for != de não aplicável casting precisa ser > 0
     if (str(df['CASTING_CADASTRADO'].iloc[0] == '0')):
         st.error("Casting igual a 0 é um problema.")
-    
+
     #verifica os dados das datas
     if day != day2:
         st.error("Primeiro show e início da parceria apresentam valores diferentes")
@@ -160,7 +157,7 @@ def showDataByDayabase(df, dfMonday, id_casa, nome_casa):
             st.error(f"Controladoria precisa ser preenchido antes do dia {day}, faltam {remaining} dias.")
         #adicionar else case: passou a data
         #se não tiver show no BD e tem no Monday: primeiro show não lançado
-        #verificar o sim do login criado com o BD: 'USUARIOS_ATIVOS' 
+        #verificar o sim do login criado com o BD: 'USUARIOS_ATIVOS'
         #
 
 def showMissingRegisterValuesFromDatabase(id):
@@ -194,34 +191,28 @@ if  not radarMondaydf.empty:
         st.divider()
         if(checkStopedItens(radarMondaydf ,filterHunter)):
             st.markdown(f"### Próximos passos de cada casa")
-            printStopedItens(radarMondaydf ,filterHunter)
+            printStopedItens(radarMondaydf[radarMondaydf['Hunter Responsável'] == filterHunter])
         else:
-            st.success("Parece que tudo completo no radar dessa casas!")
+            st.success("Parece que tudo está completo no radar das suas casas!")
 
         #rodar query para pegar dados do BD com o ID da casa
         if filterHause:
             tab1, tab2= st.tabs(["Pendências", "Situação Cadastral"])
             with tab1:
                 showDataByDayabase(cleanBdDataUsingMonday(radarMondaydf, getRadarDataFromLocal()), radarMondaydf[radarMondaydf['Nome'] == filterHause],df.loc[df['Nome'] == filterHause, 'ID EPM'].iloc[0], filterHause)
-
-                if(checkStopedItens(radarMondaydf[radarMondaydf['Nome']  == filterHause],filterHunter)):
-                    with st.expander("⚠️ Lista de pendências para resolver"):
-                        printStopedItens(radarMondaydf[radarMondaydf['Nome'] == filterHause] ,filterHunter)
-                else:
-                    st.success("Essa casa não tem pendências no Monday para resolver!!")
             with tab2:
                 stringObs = radarMondaydf.loc[radarMondaydf['Nome'] == filterHause, 'Observação Hunting'].astype(str).iloc[0]
                 st.markdown("#### Observação do hunter:")
                 st.info(stringObs)
                 showMissingRegisterValuesFromDatabase(radarMondaydf.loc[radarMondaydf['Nome'] == filterHause, 'ID EPM'].astype(int).iloc[0])
-        
+
         else:
             st.warning('Selecione dados de uma casa para ver mais campos e próximos passos.')
-    
-    
+
+
 
     else:
         st.markdown("### Radar do Monday")
         st.dataframe(radarMondaydf, hide_index=True)
-else: 
-    st.error("Erro de requisição, não foi possível coletar os dados do Monday.")   
+else:
+    st.error("Erro de requisição, não foi possível coletar os dados do Monday.")
