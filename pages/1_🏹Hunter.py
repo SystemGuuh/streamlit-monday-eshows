@@ -186,7 +186,6 @@ col2.image("./assets/imgs/eshows-logo.png", width=100)
 if st.button("Atualizar dados BD", type="secondary"): getRadarDataFromDatabse()
 st.divider()
 
-
 radarMondaydf = getHunterData(getMondayDataframe())
 radarMondaydf = renameColumns(radarMondaydf)
 
@@ -220,8 +219,6 @@ if  not radarMondaydf.empty:
 
         else:
             st.warning('Selecione dados de uma casa para ver mais campos e próximos passos.')
-
-
 
     else:
         st.markdown("### Radar do Monday")
