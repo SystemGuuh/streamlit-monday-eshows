@@ -183,7 +183,6 @@ st.set_page_config(page_title="Monday Hunter Data", page_icon="🏹")
 col1, col2 = st.columns([4,1])
 col1.markdown(f"# Radar de implantação")
 col2.image("./assets/imgs/eshows-logo.png", width=100)
-if st.button("Atualizar dados BD", type="secondary"): getRadarDataFromDatabse()
 st.divider()
 
 radarMondaydf = renameColumns(getHunterData(getMondayDataframe()))

@@ -69,7 +69,7 @@ def showDataByDayabase(df, dfMonday, id_casa, nome_casa):
     df = df.query(f'ID_CASA == {id_casa_str}')
     df = df.drop(columns=['ID_CASA', 'CASA', 'STATUS_COMPANY'])
 
-    col1, col2, col3, col4 = st.columns(3)
+    col1, col2, col3, col4 = st.columns(4)
     with col1: # se tiver casting cadastrado printa
         if df.empty or pd.isna(df['CASTING_CADASTRADO'].iloc[0]):
             st.write('Casting: pendente...')
@@ -175,7 +175,6 @@ st.set_page_config(page_title="Monday Implantação Data", page_icon="🔨")
 col1, col2 = st.columns([4,1])
 col1.markdown(f"# Radar de implantação")
 col2.image("./assets/imgs/eshows-logo.png", width=100)
-if st.button("Atualizar dados BD", type="secondary"): getRadarDataFromDatabse()
 st.divider()
 
 

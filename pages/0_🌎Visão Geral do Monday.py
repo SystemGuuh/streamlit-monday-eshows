@@ -5,11 +5,11 @@ import pandas as pd
 def createGlobalDataFrame(df):
     with st.sidebar:
         show = st.checkbox('Visão Geral', value=True)
-    
+
     if show:
         st.divider()
         st.markdown("### Radar do Monday")
-        st.dataframe(df := pd.DataFrame(df), hide_index=True)    
+        st.dataframe(df := pd.DataFrame(df), hide_index=True)
 
 def createFilters(df):
     with st.sidebar:
@@ -18,7 +18,7 @@ def createFilters(df):
                 df_line = st.selectbox("Selecione valor", df[df_column].unique().tolist())
                 showMissingValues = st.checkbox('Reportar campos vazios', value=False)
             else:
-                st.error("Erro de seleção, escolha um componente válido") 
+                st.error("Erro de seleção, escolha um componente válido")
     if filter:
         st.divider()
         st.markdown(f"### Dados de {df_column}:")
@@ -51,7 +51,6 @@ st.set_page_config(page_title="Monday Global Data", page_icon="🗂️")
 col1, col2 = st.columns([4,1])
 col1.markdown(f"# Radar de implantação")
 col2.image("./assets/imgs/eshows-logo.png", width=100)
-if st.button("Atualizar dados BD", type="secondary"): getRadarDataFromDatabse()
 
 # nesse caso radar é uma lista, não um dataframe do tipo pandas
 radarMondaydf = getMondayDataframe()
@@ -59,4 +58,4 @@ if  not radarMondaydf.empty:
     createGlobalDataFrame(radarMondaydf)
     createFilters(radarMondaydf)
 else:
-    st.error("Erro de requisição, não foi possível coletar os dados do Monday.")   
+    st.error("Erro de requisição, não foi possível coletar os dados do Monday.")
