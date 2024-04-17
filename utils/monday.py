@@ -10,7 +10,7 @@ def load_api_key():
     return st.secrets['monday']['api_key']
 
 def makeRequestByQuery(query):
-    headers = {"Authorization": load_api_key()} 
+    headers = {"Authorization": load_api_key()}
     query3 = query
     apiUrl = "https://api.monday.com/v2"
     data = {'query' : query3}
@@ -33,9 +33,9 @@ def crateMondayResquest():
                             column_values {
                             column {
                                 title
-                            } 
-                            text 
-                            } 
+                            }
+                            text
+                            }
                         }
                     }
                 }
@@ -69,7 +69,7 @@ def getMondayDataframe():
         return df
     except Exception as e:
         st.error(f"Ocorreu um erro ao tentar coletar dados")
-        return pd.DataFrame() 
+        return pd.DataFrame()
 
 def cleanBdDataUsingMonday(mondayDf, bdDf):
     try:
@@ -99,11 +99,13 @@ def getMissingRegisterValue(id):
         query= f"SELECT C.ID AS ID_CASA, C.OBS_ERRO_CADASTRO AS ERRO_CADASTRO FROM T_COMPANIES C WHERE C.ID = {id}"
         df = getDfFromQuery(query, conn)
         return df
-    
+
 def getRadarDataFromLocal():
     return pd.read_csv('./assets/csvs/bdRadar.csv')
 
-
+def renameColumns(df):
+    df = df.rename(columns={'Volume (qts gigs a eshows terá na casa?)': 'Volume'})
+    return df
 
 
 

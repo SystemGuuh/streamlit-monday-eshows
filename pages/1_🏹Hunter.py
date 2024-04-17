@@ -19,10 +19,6 @@ def getHunterData(radarMondaydf):
                                 'Cliente irá atuar de forma independente?',
                                 'Propostas lançadas?','Cadastro/Onboarding de artistas', 'Observação Hunting', 'Hunter Responsável']]
 
-def renameColumns(df):
-    df = df.rename(columns={'Volume (qts gigs a eshows terá na casa?)': 'Volume'})
-    return df
-
 def checkStopedItens(df, hunter):
     try:
         df = df[df['Hunter Responsável'] == hunter]
@@ -186,8 +182,7 @@ col2.image("./assets/imgs/eshows-logo.png", width=100)
 if st.button("Atualizar dados BD", type="secondary"): getRadarDataFromDatabse()
 st.divider()
 
-radarMondaydf = getHunterData(getMondayDataframe())
-radarMondaydf = renameColumns(radarMondaydf)
+radarMondaydf = renameColumns(getHunterData(getMondayDataframe()))
 
 if  not radarMondaydf.empty:
     with st.sidebar:
@@ -199,9 +194,8 @@ if  not radarMondaydf.empty:
         df = radarMondaydf[radarMondaydf['Hunter Responsável'] == filterHunter].reset_index(drop=True)
         st.dataframe(df, hide_index=True)
 
-        st.divider()
+
         if(checkStopedItens(radarMondaydf ,filterHunter)):
-            st.markdown(f"### Próximos passos de cada casa")
             printStopedItens(radarMondaydf[radarMondaydf['Hunter Responsável'] == filterHunter])
         else:
             st.success("Parece que tudo está completo no radar das suas casas!")
