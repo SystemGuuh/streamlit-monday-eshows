@@ -6,19 +6,19 @@ from datetime import datetime, date
 
 # colocar dados pertinentes para Farmer
 def getFarmerData(radarMondaydf):
-    return radarMondaydf[['ID EPM', 'Nome', 'Relevância do cliente', 
-                               'Nome contratante', 'E-mail do contratante', 
-                               'Cidade do Estabelecimento', 'GMV estimado', 
-                               'Início da parceria', 'Tipo de negociação', 'Carência?', 
+    return radarMondaydf[['ID EPM', 'Nome', 'Relevância do cliente',
+                               'Nome contratante', 'E-mail do contratante',
+                               'Cidade do Estabelecimento', 'GMV estimado',
+                               'Início da parceria', 'Tipo de negociação', 'Carência?',
                                'Carência até (data)', 'Formulário Hub', 'Grupo no Whatsapp',
-                                'Companie criado?', 'Criação da marca', 'Login criado?', 
-                                'Cadastro de show padrão (QUEM VAI FAZER?)', 
-                                'Coletar contatos de artista', 'Coletar programação', 
-                                'Recebi programação do Hunter?', 
-                                'Estrutura da programação (dias da semana)', 
-                                'Volume (qts dias a eshows terá na casa?)',
+                                'Companie criado?', 'Criação da marca', 'Login criado?',
+                                'Cadastro de show padrão',
+                                'Coletar contatos de artista', 'Coletar programação',
+                                'Recebi programação do Hunter?',
+                                'Estrutura da programação (dias da semana)',
+                                'Volume (qts gigs a eshows terá na casa?)',
                                 'Cliente irá atuar de forma independente?',
-                                'Propostas lançadas?', 'Observação Hunting', 'Farmer']]
+                                'Propostas lançadas?','Cadastro/Onboarding de artistas', 'Observação Hunting', 'Hunter Responsável', 'Farmer']]
 
 def checkStopedItens(df, farmer):
     try:
@@ -66,7 +66,7 @@ def printStopedItens(df, farmer):
                     nome = linha['Nome']
                     st.markdown(f'- "**{nome}**" está com o campo "**{coluna}**" parado.')
                 valor_anterior = valor.lower()
-                
+
 def showDataByDayabase(df, dfMonday, id_casa, nome_casa):
     controladoria=None
     day=None; day2=None
@@ -75,12 +75,12 @@ def showDataByDayabase(df, dfMonday, id_casa, nome_casa):
     if df['CASA_ATIVA'].iloc[0] != 1:
         st.markdown('### Status atuais da casa: <span style="color:red">desativada</span>', unsafe_allow_html=True)
         return -1
-    
+
     st.markdown(f'### Status atuais da casa {nome_casa}')
     id_casa_str = str(id_casa)  # Convertendo id_casa para string
     df = df.query(f'ID_CASA == {id_casa_str}')
     df = df.drop(columns=['ID_CASA', 'CASA', 'STATUS_COMPANY'])
-    
+
     col1, col2, col3 = st.columns(3)
     with col1:
         if df.empty or pd.isna(df['CASTING_CADASTRADO'].iloc[0]):
@@ -99,7 +99,7 @@ def showDataByDayabase(df, dfMonday, id_casa, nome_casa):
         else:
             st.write('Controladoria:', str(df['CONTROLADORIA_ESHOWS'].iloc[0]))
             controladoria=int(df['CONTROLADORIA_ESHOWS'].iloc[0])
-    
+
     col4, col5, col6 = st.columns(3)
     with col4:
         if dfMonday['GMV estimado'].empty or pd.isna(dfMonday['GMV estimado'].iloc[0]):
@@ -128,7 +128,7 @@ def showDataByDayabase(df, dfMonday, id_casa, nome_casa):
             day = data_obj.strftime("%d/%m/%Y")
             time = data_obj.strftime("%H:%M:%S")
             st.write('Primeiro Show no BD:', day, ' às ', time)
-    
+
     if dfMonday.empty or pd.isna(dfMonday['Início da parceria'].iloc[0]):
         col8.write('Primeiro Show no Monday: pendente...')
     else:
@@ -206,15 +206,15 @@ if  not radarMondaydf.empty:
                 st.markdown("#### Observação do hunter:")
                 st.info(stringObs)
                 showMissingRegisterValuesFromDatabase(radarMondaydf.loc[radarMondaydf['Nome'] == filterHause, 'ID EPM'].astype(int).iloc[0])
-        
+
         else:
             st.warning('Selecione dados de uma casa para ver mais campos e próximos passos.')
-    
-    
+
+
 
     else:
         st.divider()
         st.markdown("### Radar do Monday")
         st.dataframe(radarMondaydf, hide_index=True)
-else: 
-    st.error("Erro de requisição, não foi possível coletar os dados do Monday.")   
+else:
+    st.error("Erro de requisição, não foi possível coletar os dados do Monday.")

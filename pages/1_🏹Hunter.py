@@ -44,11 +44,11 @@ def printStopedItens(df):
     for indice, linha in df.iterrows():
         valor_anterior = None
         count =0
-        for coluna in df.columns[11:24]:
+        for coluna in df.columns:
             valor = linha[coluna]
             if valor is None or str(valor) == '':
                 nome = linha['Nome']
-                stopedItensValues.append(f'"**{nome}**" está com o campo vazio e precisa ser preenchido.\n')
+                stopedItensValues.append(f'"**{nome}**" está com o campo "**{coluna}**" vazio e precisa ser preenchido.\n')
                 count += 1
                 valor_anterior = None
                 continue
