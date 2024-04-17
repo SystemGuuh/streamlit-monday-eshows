@@ -77,7 +77,7 @@ def showDataByDayabase(df, dfMonday, id_casa, nome_casa):
     df = df.query(f'ID_CASA == {id_casa_str}')
     df = df.drop(columns=['ID_CASA', 'CASA', 'STATUS_COMPANY'])
 
-    col1, col2, col3 = st.columns(3)
+    col1, col2, col3, col4 = st.columns(4)
     with col1: # se tiver casting cadastrado printa
         if df.empty or pd.isna(df['CASTING_CADASTRADO'].iloc[0]):
             st.write('Casting: pendente...')
@@ -95,6 +95,10 @@ def showDataByDayabase(df, dfMonday, id_casa, nome_casa):
         else:
             st.write('Controladoria:', str(df['CONTROLADORIA_ESHOWS'].iloc[0]))
             controladoria=int(df['CONTROLADORIA_ESHOWS'].iloc[0])
+    with col4:
+            statusCompny = getStatusCompany(id_casa_str)
+            st.write('Status:', str(statusCompny['status'].iloc[0]))
+
 
     col4, col5, col6 = st.columns(3)
     with col4: # mostra completo caso nao tenha nada faltando no cadastro

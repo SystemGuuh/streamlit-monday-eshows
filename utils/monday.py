@@ -100,6 +100,17 @@ def getMissingRegisterValue(id):
         df = getDfFromQuery(query, conn)
         return df
 
+def getStatusCompany(id):
+    conn = get_mysql_connection()
+    if conn.is_connected():
+        query= f"""SELECT	TC.ID, SC.STATUS AS status
+                FROM T_COMPANIES AS TC
+                        INNER JOIN T_STATUS_COMPANIES SC ON TC.FK_STATUS_COMPANY = SC.ID
+                WHERE TC.ID =  {id}"""
+        df = getDfFromQuery(query, conn)
+        return df
+
+
 def getRadarDataFromLocal():
     return pd.read_csv('./assets/csvs/bdRadar.csv')
 
