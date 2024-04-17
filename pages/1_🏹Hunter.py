@@ -67,7 +67,6 @@ def printStopedItens(df):
                 st.write('\n'.join(map(str, stopedItensValues[aux:stopedItensCount[indice]])))
             aux = stopedItensCount[indice]
 
-
 def showDataByDayabase(df, dfMonday, id_casa, nome_casa):
     controladoria=None
     day=None; day2=None
@@ -171,7 +170,6 @@ def showDataByDayabase(df, dfMonday, id_casa, nome_casa):
             remaining = (today_datetime - day_datetime).days
             st.error(f"Controladoria precisa ser preenchido, está atrasada há {remaining} dias!")
         #verificar o sim do login criado com o BD: 'USUARIOS_ATIVOS'
-
 
 def showMissingRegisterValuesFromDatabase(id):
     df = getMissingRegisterValue(id)
