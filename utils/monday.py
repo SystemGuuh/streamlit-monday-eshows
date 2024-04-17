@@ -87,12 +87,6 @@ def searchMissingValues(df):
                     if pd.isnull(value) or value == "":
                         st.error(f"Na linha {index+1}, a coluna '{column}' precisa ser preenchida.")
 
-def getRadarDataFromDatabse():
-    conn = get_mysql_connection()
-    if conn.is_connected():
-        radarBdDf = getDfFromQuery(GET_RADAR_FROM_BD, conn)
-        radarBdDf.to_csv('./assets/csvs/bdRadar.csv', index=False)
-
 def getMissingRegisterValue(id):
     conn = get_mysql_connection()
     if conn.is_connected():
@@ -109,7 +103,6 @@ def getStatusCompany(id):
                 WHERE TC.ID =  {id}"""
         df = getDfFromQuery(query, conn)
         return df
-
 
 def getRadarDataFromLocal():
     return pd.read_csv('./assets/csvs/bdRadar.csv')

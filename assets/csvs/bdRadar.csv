@@ -1,4 +1,5 @@
 ID_CASA,CASA,PRIMEIRO_SHOW,CASTING_CADASTRADO,CASA_ATIVA,CONTROLADORIA_ESHOWS,USUARIOS_ATIVOS,STATUS_COMPANY
+1422,developer eshows,,0,0,0,0,Implantação
 1416,A casa teste,,0,1,1,0,Implantação
 1415,Tatuzinho Pompeia,2024-04-17 19:00:00,0,1,1,0,Implantação
 1414,SpotMarkt - Córrego Grande,,0,1,0,1,Implantação
@@ -17,7 +18,7 @@ ID_CASA,CASA,PRIMEIRO_SHOW,CASTING_CADASTRADO,CASA_ATIVA,CONTROLADORIA_ESHOWS,US
 1315,Casarão 17,,0,1,0,0,Implantação
 1314,Fika Bar ,,0,1,0,1,Implantação
 1313,Estaleiro,,0,0,0,0,Implantação
-1312,Al Capone,2024-04-10 19:00:00,0,1,1,1,Implantação
+1312,Al Capone,2024-04-10 19:00:00,0,1,0,1,Implantação
 1311,LUP Lounge Bar,,0,1,0,0,Implantação
 1310,Oliveiras,,0,1,0,1,Implantação
 1309,Ponta d'Agulha Costelaria - Rio Tavares,2024-04-11 19:00:00,0,1,1,1,Implantação

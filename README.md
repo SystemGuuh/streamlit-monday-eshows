@@ -26,7 +26,7 @@ pip install -r requirements.txt
 Execute o aplicativo Streamlit:
 
 ```
-streamlit run app.py
+streamlit run Hello.py
 ```
 
 ## Funcionalidades
