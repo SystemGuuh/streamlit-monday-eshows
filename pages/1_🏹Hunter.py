@@ -15,9 +15,13 @@ def getHunterData(radarMondaydf):
                                 'Coletar contatos de artista', 'Coletar programação',
                                 'Recebi programação do Hunter?',
                                 'Estrutura da programação (dias da semana)',
-                                'Volume (qts dias a eshows terá na casa?)',
+                                'Volume (qts gigs a eshows terá na casa?)',
                                 'Cliente irá atuar de forma independente?',
-                                'Propostas lançadas?', 'Observação Hunting', 'Hunter Responsável']]
+                                'Propostas lançadas?','Cadastro/Onboarding de artistas', 'Observação Hunting', 'Hunter Responsável']]
+
+def renameColumns(df):
+    df = df.rename(columns={'Volume (qts gigs a eshows terá na casa?)': 'Volume'})
+    return df
 
 def checkStopedItens(df, hunter):
     try:
@@ -79,17 +83,17 @@ def showDataByDayabase(df, dfMonday, id_casa, nome_casa):
     df = df.drop(columns=['ID_CASA', 'CASA', 'STATUS_COMPANY'])
 
     col1, col2, col3 = st.columns(3)
-    with col1:
+    with col1: # se tiver casting cadastrado printa
         if df.empty or pd.isna(df['CASTING_CADASTRADO'].iloc[0]):
             st.write('Casting: pendente...')
         else:
             st.write('Casting:', str(df['CASTING_CADASTRADO'].iloc[0]))
-    with col2:
+    with col2: # se tiver usuarios ativos printa
         if df.empty or pd.isna(df['USUARIOS_ATIVOS'].iloc[0]):
             st.write('Usuários ativos: pendente...')
         else:
             st.write('Usuários ativos:', str(df['USUARIOS_ATIVOS'].iloc[0]))
-    with col3:
+    with col3: # se tiver estatus da controladoria printa
         if df.empty or pd.isna(df['CONTROLADORIA_ESHOWS'].iloc[0]):
             st.write('Controladoria: pendente...')
             controladoria=0
@@ -98,23 +102,22 @@ def showDataByDayabase(df, dfMonday, id_casa, nome_casa):
             controladoria=int(df['CONTROLADORIA_ESHOWS'].iloc[0])
 
     col4, col5, col6 = st.columns(3)
-    with col4:
-        #remover gmv
-        #printar incompleto se tiver dados faltando 'STATUS_CADASTRADO'
-        if dfMonday['GMV estimado'].empty or pd.isna(dfMonday['GMV estimado'].iloc[0]):
-            st.write('GMV: pendente...')
+    with col4: # mostra completo caso nao tenha nada faltando no cadastro
+        tempdf = pd.DataFrame(getMissingRegisterValue(id_casa))
+        if tempdf['ERRO_CADASTRO'].isna().any() or tempdf['ERRO_CADASTRO'].astype(str).iloc[0] == '':
+            st.markdown('Cadastro <span style="color:green">COMPLETO</span>', unsafe_allow_html=True)
         else:
-            st.write('GMV:', dfMonday['GMV estimado'].iloc[0])
-    with col5:
+            st.markdown('Cadastro <span style="color:red">INCOMPLETO</span>', unsafe_allow_html=True)
+    with col5: # verifica status do login peelo banco de dados
         if dfMonday['Login criado?'].empty or pd.isna(dfMonday['Login criado?'].iloc[0]):
             st.write('Login criado precisa ser preenchido')
         else:
             st.write('Login criado?', dfMonday['Login criado?'].iloc[0])
     with col6:
-        if dfMonday['Volume (qts dias a eshows terá na casa?)'].empty or pd.isna(dfMonday['Volume (qts dias a eshows terá na casa?)'].iloc[0]):
+        if dfMonday['Volume'].empty or pd.isna(dfMonday['Volume'].iloc[0]):
             st.write('Volume: precisa ser preenchido')
         else:
-            st.write('Volume de shows:', dfMonday['Volume (qts dias a eshows terá na casa?)'].iloc[0])
+            st.write('Volume de shows:', dfMonday['Volume'].iloc[0])
 
     #formatando data do primeiro show, se tiver
     col7, col8 = st.columns(2)
@@ -128,6 +131,7 @@ def showDataByDayabase(df, dfMonday, id_casa, nome_casa):
             time = data_obj.strftime("%H:%M:%S")
             st.write('Primeiro Show no BD:', day, ' às ', time)
 
+    #formatando data do primeiro show, e verifa se está no banco de dados
     if dfMonday.empty or pd.isna(dfMonday['Início da parceria'].iloc[0]):
         col8.write('Primeiro Show no Monday: pendente...')
     else:
@@ -136,29 +140,38 @@ def showDataByDayabase(df, dfMonday, id_casa, nome_casa):
             data_obj = datetime.strptime(data_str, "%Y-%m-%d")
             day2 = data_obj.strftime("%d/%m/%Y")
             st.write('Primeiro Show no Monday:', day2)
+        if(df.empty or pd.isna(df['PRIMEIRO_SHOW'].iloc[0])) and not (dfMonday.empty or pd.isna(dfMonday['Início da parceria'].iloc[0])):
+            remainingDays = (datetime.strptime(day2, "%d/%m/%Y") - datetime.strptime(date.today().strftime("%d/%m/%Y"), "%d/%m/%Y")).days
+            if (remainingDays < 0):
+                st.error(f"Estamos atrasados para lançar o show, foi há {-1 * remainingDays} dias.")
+            elif (remainingDays == 0):
+                st.error(f"O show vai ocorrer hoje, precisamos lanaçar no bando de dados.")
+            else:
+                st.error(f"Opa, parece que o primeiro show não foi lançado ainda! Faltam {remainingDays} dias.")
 
-    #Regras de verificação do status
     #verificando casting
-    #se cadastro/onboard de artista for != de não aplicável casting precisa ser > 0
-    if (str(df['CASTING_CADASTRADO'].iloc[0] == '0')):
-        st.error("Casting igual a 0 é um problema.")
+    if str(dfMonday['Cadastro/Onboarding de artistas'].iloc[0]) != "Não aplica" and (df['CASTING_CADASTRADO'].empty or str(df['CASTING_CADASTRADO'].iloc[0]) == '0'):
+        st.error("Casting igual a 0 é um problema, precisamos ver!")
 
-    #verifica os dados das datas
-    if day != day2:
+    #verifica os dados das datasVolume (qts dias a eshows terá na casa?)
+    if  day != day2:
         st.error("Primeiro show e início da parceria apresentam valores diferentes")
     else:
         today = date.today().strftime("%d/%m/%Y")
-        if today < day and controladoria == 0:
+        if today <= day and controladoria == 0:
             #calcula quando dias faltam
             today_datetime = datetime.strptime(today, "%d/%m/%Y")
             day_datetime = datetime.strptime(day, "%d/%m/%Y")
             remaining = (day_datetime - today_datetime).days
 
             st.error(f"Controladoria precisa ser preenchido antes do dia {day}, faltam {remaining} dias.")
-        #adicionar else case: passou a data
-        #se não tiver show no BD e tem no Monday: primeiro show não lançado
+        elif today > day and controladoria == 0:
+            today_datetime = datetime.strptime(today, "%d/%m/%Y")
+            day_datetime = datetime.strptime(day, "%d/%m/%Y")
+            remaining = (today_datetime - day_datetime).days
+            st.error(f"Controladoria precisa ser preenchido, está atrasada há {remaining} dias!")
         #verificar o sim do login criado com o BD: 'USUARIOS_ATIVOS'
-        #
+
 
 def showMissingRegisterValuesFromDatabase(id):
     df = getMissingRegisterValue(id)
@@ -177,6 +190,7 @@ st.divider()
 
 
 radarMondaydf = getHunterData(getMondayDataframe())
+radarMondaydf = renameColumns(radarMondaydf)
 
 if  not radarMondaydf.empty:
     with st.sidebar:
