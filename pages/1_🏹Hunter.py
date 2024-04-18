@@ -113,7 +113,7 @@ def showDataByDayabase(df, dfMonday, id_casa, nome_casa):
         else:
             st.write('Login criado?', dfMonday['Login criado?'].iloc[0])
     with col6:
-        if dfMonday['Volume'].empty or pd.isna(dfMonday['Volume'].iloc[0]):
+        if dfMonday['Volume'].empty or pd.isna(dfMonday['Volume'].iloc[0]) or str(dfMonday['Volume'].iloc[0])=="":
             st.write('Volume: precisa ser preenchido')
         else:
             st.write('Volume de shows:', dfMonday['Volume'].iloc[0])

@@ -36,9 +36,6 @@ def run():
         - **Hunter:** Página para visualizar dados pertinentes a Hunters.
         - **Farmer:** Página para visualizar dados pertinentes a Farmers.
         - **Implementação:** Página para visualizar dados de implantantação.
-
-        ### Outras orientações
-        - O botão **"Atualizar dados BD"** roda uma query para atualizar os dados usado do banco, pode demorar até 1 minuto.
         """
     )
 
