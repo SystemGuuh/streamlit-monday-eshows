@@ -12,7 +12,7 @@ def getImplantacaoData(radarMondaydf):
                                'Nome contratante', 'E-mail do contratante',
                                'Cidade do Estabelecimento', 'Cadastro de show padrão',
                                'Recebi programação do Hunter?', 'Criar perfil Espaces', 'Ativou controladoria? (ativar três dias antes)',
-                               'Observação Hunting', 'Ação', 'Login criado?', 'Volume (qts gigs a eshows terá na casa?)', 'Início da parceria',
+                               'Observação Hunting', 'Login criado?', 'Volume (qts gigs a eshows terá na casa?)', 'Início da parceria',
                                'Cadastro/Onboarding de artistas']]
 
 def checkStopedItens(df):

@@ -112,10 +112,10 @@ def showDataByDayabase(df, dfMonday, id_casa, nome_casa):
         else:
             st.write('Login criado?', dfMonday['Login criado?'].iloc[0])
     with col6:
-        if dfMonday['Volume (qts dias a eshows terá na casa?)'].empty or pd.isna(dfMonday['Volume (qts dias a eshows terá na casa?)'].iloc[0]):
+        if dfMonday['Volume'].empty or pd.isna(dfMonday['Volume'].iloc[0]):
             st.write('Volume: precisa ser preenchido')
         else:
-            st.write('Volume de shows:', dfMonday['Volume (qts dias a eshows terá na casa?)'].iloc[0])
+            st.write('Volume de shows:', dfMonday['Volume'].iloc[0])
 
     #formatando data do primeiro show, se tiver
     col7, col8 = st.columns(2)
@@ -169,7 +169,7 @@ col1, col2 = st.columns([4,1])
 col1.markdown(f"# Radar de implantação")
 col2.image("./assets/imgs/eshows-logo.png", width=100)
 
-radarMondaydf = getFarmerData(getMondayDataframe())
+radarMondaydf = renameColumns(getFarmerData(getMondayDataframe()))
 
 if  not radarMondaydf.empty:
     with st.sidebar:
