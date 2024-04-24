@@ -107,11 +107,11 @@ def showDataByDayabase(df, dfMonday, id_casa, nome_casa):
             st.markdown('Cadastro <span style="color:green">COMPLETO</span>', unsafe_allow_html=True)
         else:
             st.markdown('Cadastro <span style="color:red">INCOMPLETO</span>', unsafe_allow_html=True)
-    with col5: # verifica status do login peelo banco de dados
-        if dfMonday['Login criado?'].empty or pd.isna(dfMonday['Login criado?'].iloc[0]):
-            st.write('Login criado precisa ser preenchido')
+    with col5: # verifica se a casas exige nota fiscal
+        if df['NOTA_FISCAL'].empty or pd.isna(df['NOTA_FISCAL'].iloc[0]):
+            st.write('Casa não exige nota fiscal')
         else:
-            st.write('Login criado?', dfMonday['Login criado?'].iloc[0])
+            st.write('Casa exige nota fiscal')
     with col6:
         if dfMonday['Volume'].empty or pd.isna(dfMonday['Volume'].iloc[0]) or str(dfMonday['Volume'].iloc[0])=="":
             st.write('Volume: precisa ser preenchido')
@@ -148,6 +148,16 @@ def showDataByDayabase(df, dfMonday, id_casa, nome_casa):
             else:
                 st.error(f"Opa, parece que o primeiro show não foi lançado ainda! Faltam {remainingDays} dias.")
 
+    #adicionando data da próxima oportunidade em andamento
+    if df.empty or pd.isna(df['PROXIMA_OPORTUNIDADE_EM_ANDAMENTO'].iloc[0]):
+        st.markdown('Primeira oportunidade em andamento: <span style="color:red">Não encontrado</span>', unsafe_allow_html=True)
+    else:
+        data_str = df['PROXIMA_OPORTUNIDADE_EM_ANDAMENTO'].iloc[0]
+        data_obj = datetime.strptime(data_str, "%Y-%m-%d %H:%M:%S")
+        day3 = data_obj.strftime("%d/%m/%Y")
+        time3 = data_obj.strftime("%H:%M:%S")
+        st.write(f'Primeira oportunidade em andamento: {day3} às {time3}')
+
     #verificando casting
     if str(dfMonday['Cadastro/Onboarding de artistas'].iloc[0]) != "Não aplica" and (df['CASTING_CADASTRADO'].empty or str(df['CASTING_CADASTRADO'].iloc[0]) == '0'):
         st.error("Casting igual a 0 é um problema, precisamos ver!")
@@ -169,7 +179,6 @@ def showDataByDayabase(df, dfMonday, id_casa, nome_casa):
             day_datetime = datetime.strptime(day, "%d/%m/%Y")
             remaining = (today_datetime - day_datetime).days
             st.error(f"Controladoria precisa ser preenchido, está atrasada há {remaining} dias!")
-        #verificar o sim do login criado com o BD: 'USUARIOS_ATIVOS'
 
 def showMissingRegisterValuesFromDatabase(id):
     df = getMissingRegisterValue(id)

@@ -1,50 +1,58 @@
-ID_CASA,CASA,PRIMEIRO_SHOW,CASTING_CADASTRADO,CASA_ATIVA,CONTROLADORIA_ESHOWS,USUARIOS_ATIVOS,STATUS_COMPANY
-1429,Casa teste final,,0,1,1,0,Implantação
-1428,Frederico Beira Mar,2024-04-19 19:00:00,0,1,1,1,Implantação
-1427,SALVADOR,,0,0,0,0,Implantação
-1426,Nova casa teste,,0,1,0,0,Implantação
-1425,Acasa teste 2,,0,1,1,0,Implantação
-1422,developer eshows,,0,0,0,0,Implantação
-1416,A casa teste,,0,1,1,0,Implantação
-1415,Tatuzinho Pompeia,2024-04-17 19:00:00,0,1,1,0,Implantação
-1414,SpotMarkt - Córrego Grande,2024-05-01 20:00:00,10,1,0,1,Implantação
-1413,SpotMarkt - São José,2024-05-02 19:30:00,10,1,0,1,Implantação
-1407,Bota Restaurante,2024-04-19 19:00:00,0,1,1,2,Implantação
-1402,La Braciera Pizzaria - Morumbi,2024-04-19 19:30:00,0,1,1,1,Implantação
-1389,Espeto Lounge,,0,1,0,1,Implantação
-1320,AnitA Restaurante e Petiscaria,2024-04-12 20:00:00,2,1,0,1,Implantação
-1318,La Braciera Pizzaria - Tatuapé,2024-04-09 19:30:00,0,1,1,1,Implantação
-1317,Bud Park,2024-04-10 20:30:00,4,1,0,2,Implantação
-1316,CAMARADA ADMINISTRACAO DE RESTAURANTES S.A,,0,1,0,0,Implantação
-1313,Estaleiro,,0,0,0,0,Implantação
-1309,Ponta d'Agulha Costelaria - Rio Tavares,2024-04-11 19:00:00,0,1,1,1,Implantação
-1308,Armazém Santa Tereza,2024-04-19 20:00:00,5,1,1,0,Implantação
-1304,Braza Gastronomia,2024-04-13 19:30:00,0,1,1,0,Implantação
-1302,Massa Beer,,0,1,0,1,Implantação
-1300,Trem Azul,,18,0,0,0,Implantação
-1299,Boteco Empório da Cerveja,,0,1,0,1,Implantação
-1298,Multi Open Shopping ,2024-04-05 19:00:00,16,1,1,2,Implantação
-1297,Rusticão Bar,,1,0,0,1,Implantação
-1296,Coco Bambu Plaza Sul,,0,1,0,3,Implantação
-1294,Pobre Juan - Belém,2024-05-15 19:00:00,0,1,0,2,Implantação
-1293,Porks Brooklin,2024-03-15 20:00:00,0,1,1,0,Implantação
-1292,Disk me Disse,2024-04-09 19:00:00,3,1,1,1,Implantação
-1291,Estaleiro,,0,1,0,1,Implantação
-1289,Compa,2024-05-02 19:00:00,0,1,1,0,Implantação
-1288,Espetto Carioca Campinas,2024-03-19 19:30:00,0,1,1,1,Implantação
-1287,Flauber's,2024-04-13 20:30:00,5,1,0,1,Implantação
-1281,Dona Fulô BH,,5,1,1,1,Implantação
-1063,Arena Essipê,2024-03-09 17:00:00,1,1,0,1,Implantação
-995,Bello Chopp,,0,0,0,0,Implantação
-990,Beef Station,,0,0,1,1,Implantação
-989,Mulekes Bar,,0,0,1,0,Implantação
-987,Seu Boteco,,0,0,1,1,Implantação
-984,Rufus Bar,,0,0,1,1,Implantação
-982,Indócil Bar,,0,0,0,1,Implantação
-980,Na Montanha,,0,0,1,1,Implantação
-979,Divinno Chopperia,,0,0,1,1,Implantação
-978,Bem Brasil,,0,0,1,1,Implantação
-975,Steak Bull Prime,,0,0,1,1,Implantação
-974,Snoopy - Restaurante e Lanchonete,,0,0,1,1,Implantação
-958,El Perrito,,0,0,1,0,Implantação
-957,Restaurante o Conde que Ri,,0,0,1,1,Implantação
+ID_CASA,CASA,PRIMEIRO_SHOW,PROXIMA_OPORTUNIDADE_EM_ANDAMENTO,CASTING_CADASTRADO,CASA_ATIVA,CONTROLADORIA_ESHOWS,USUARIOS_ATIVOS,STATUS_COMPANY,NOTA_FISCAL
+1443,abcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabc,,,0,1,0,0,Implantação,0
+1442,The homeTest,,,0,1,0,0,Implantação,1
+1438,FORTALEZA,,,0,1,0,0,Estabilização,0
+1437,La Braciera Pizzaria - Jardins,2024-05-14 19:30:00,,0,1,0,1,Implantação,1
+1436,Container Village Mall,2024-04-27 19:30:00,,0,1,1,1,Implantação,1
+1435,São Arnulfo Pub,,,0,1,1,1,Implantação,0
+1434,developer eshows,,,0,0,0,0,Implantação,0
+1433,teste figuer ,,,0,0,0,0,Implantação,1
+1428,Frederico Beira Mar,2024-04-19 19:00:00,2024-04-25 19:00:00,0,1,1,1,Implantação,0
+1427,SALVADOR,,,0,0,0,0,Implantação,0
+1416,A casa teste,,,0,1,1,0,Implantação,1
+1415,Tatuzinho Pompeia,2024-04-17 19:00:00,2024-04-25 19:00:00,0,1,1,0,Implantação,1
+1414,SpotMarkt - Córrego Grande,2024-05-01 20:00:00,,10,1,0,1,Implantação,1
+1413,SpotMarkt - São José,2024-05-02 19:30:00,2024-05-10 19:30:00,10,1,0,1,Implantação,1
+1407,Bota Restaurante,2024-04-19 19:00:00,,0,1,1,2,Implantação,1
+1402,La Braciera Pizzaria - Morumbi,2024-04-19 19:30:00,2024-04-27 19:30:00,0,1,1,1,Implantação,1
+1389,Espeto Lounge,,,0,1,0,1,Implantação,0
+1320,AnitA Restaurante e Petiscaria,2024-04-12 20:00:00,,2,1,0,1,Implantação,0
+1318,La Braciera Pizzaria - Tatuapé,2024-04-09 19:30:00,,0,1,1,1,Implantação,1
+1317,Bud Park,2024-04-10 20:30:00,,4,1,0,2,Implantação,0
+1316,CAMARADA ADMINISTRACAO DE RESTAURANTES S.A,,,0,1,0,0,Implantação,0
+1313,Estaleiro,,,0,0,0,0,Implantação,0
+1309,Ponta d'Agulha Costelaria - Rio Tavares,2024-04-11 19:00:00,2024-04-28 14:30:00,0,1,1,1,Implantação,0
+1308,Armazém Santa Tereza,2024-04-19 20:00:00,,5,1,1,0,Implantação,0
+1304,Braza Gastronomia,2024-04-13 19:30:00,,0,1,1,0,Implantação,1
+1302,Massa Beer,,,0,1,0,1,Implantação,0
+1300,Trem Azul,,,18,0,0,0,Implantação,0
+1299,Boteco Empório da Cerveja,,,0,1,0,1,Implantação,0
+1298,Multi Open Shopping ,2024-04-05 19:00:00,2024-05-11 19:00:00,16,1,1,2,Implantação,1
+1297,Rusticão Bar,,,1,0,0,1,Implantação,0
+1296,Coco Bambu Plaza Sul,2024-04-26 17:00:00,2024-04-29 17:00:00,0,1,0,3,Implantação,1
+1294,Pobre Juan - Belém,2024-05-15 19:00:00,2024-04-26 19:00:00,0,1,0,2,Implantação,1
+1293,Porks Brooklin,2024-03-15 20:00:00,2024-04-26 19:30:00,0,1,1,0,Implantação,0
+1292,Disk me Disse,2024-04-09 19:00:00,,3,1,1,1,Implantação,0
+1291,Estaleiro,,,0,1,0,1,Implantação,0
+1289,Compa,2024-05-02 19:00:00,2024-05-02 19:00:00,0,1,1,0,Implantação,0
+1288,Espetto Carioca Campinas,2024-03-19 19:30:00,2024-05-01 19:30:00,0,1,1,1,Implantação,0
+1287,Flauber's,2024-04-13 20:30:00,,5,1,0,1,Implantação,0
+1283,Leblon Leblon,2024-04-26 20:00:00,,0,1,1,1,Implantação,1
+1281,Dona Fulô BH,,,5,1,1,1,Implantação,0
+1279,Ponto Savassi,2024-03-01 19:30:00,2024-05-11 19:00:00,17,1,1,1,Estabilização,0
+1063,Arena Essipê,2024-03-09 17:00:00,2024-04-27 16:30:00,1,1,0,1,Implantação,0
+995,Bello Chopp,,,0,0,0,0,Implantação,0
+990,Beef Station,,2023-10-21 16:00:00,0,0,1,1,Implantação,0
+989,Mulekes Bar,,,0,0,1,0,Implantação,0
+987,Seu Boteco,,2023-10-07 19:30:00,0,0,1,1,Implantação,0
+986,Coco Bambu Derby,1899-12-30 12:00:00,,1,1,1,3,Estabilização,1
+984,Rufus Bar,,,0,0,1,1,Implantação,0
+982,Indócil Bar,,,0,0,0,1,Implantação,0
+980,Na Montanha,,,0,0,1,1,Implantação,0
+979,Divinno Chopperia,,,0,0,1,1,Implantação,0
+978,Bem Brasil,,,0,0,1,1,Implantação,0
+975,Steak Bull Prime,,2023-10-07 19:00:00,0,0,1,1,Implantação,0
+974,Snoopy - Restaurante e Lanchonete,,,0,0,1,1,Implantação,0
+958,El Perrito,,,0,0,1,0,Implantação,0
+957,Restaurante o Conde que Ri,,,0,0,1,1,Implantação,0
+935,Delta K,,,0,0,1,1,Estabilização,0
