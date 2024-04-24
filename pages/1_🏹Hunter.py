@@ -190,7 +190,7 @@ def showMissingRegisterValuesFromDatabase(id):
 
 st.set_page_config(page_title="Monday Hunter Data", page_icon="🏹")
 col1, col2 = st.columns([4,1])
-col1.markdown(f"# Radar de implantação")
+col1.markdown(f"# Radar de implantação e estabilização")
 col2.image("./assets/imgs/eshows-logo.png", width=100)
 st.divider()
 

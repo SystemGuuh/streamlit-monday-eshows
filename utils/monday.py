@@ -48,7 +48,7 @@ def processDataFromARequest():
     response_data = crateMondayResquest()["data"]["boards"][0]["items_page"]
     dados_formatados = []
     for item in response_data["items"]:
-        if item["group"]["title"] == "Implantação":
+        if item["group"]["title"] == "Implantação" or item["group"]["title"] == "Estabilização":
             dicionario_item = {"Nome": item["name"]}
             for coluna in item["column_values"]:
                 titulo_coluna = coluna["column"]["title"]
