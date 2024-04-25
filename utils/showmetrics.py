@@ -178,13 +178,13 @@ def showDataByDayabase(df, dfMonday, id_casa, nome_casa):
 
     #adicionando data da próxima oportunidade em andamento
     if df.empty or pd.isna(df['PROXIMA_OPORTUNIDADE_EM_ANDAMENTO'].iloc[0]):
-        st.markdown('Primeira oportunidade em andamento: <span style="color:red">Não encontrado</span>', unsafe_allow_html=True)
+        st.markdown('Próxima oportunidade em andamento: <span style="color:red">Não encontrado</span>', unsafe_allow_html=True)
     else:
         data_str = df['PROXIMA_OPORTUNIDADE_EM_ANDAMENTO'].iloc[0]
         data_obj = datetime.strptime(data_str, "%Y-%m-%d %H:%M:%S")
         day3 = data_obj.strftime("%d/%m/%Y")
         time3 = data_obj.strftime("%H:%M:%S")
-        st.write(f'Primeira oportunidade em andamento: {day3} às {time3}')
+        st.write(f'Próxima oportunidade em andamento: {day3} às {time3}')
 
     #verificando casting
     if str(dfMonday['Cadastro/Onboarding de artistas'].iloc[0]) != "Não aplica" and (df['CASTING_CADASTRADO'].empty or str(df['CASTING_CADASTRADO'].iloc[0]) == '0'):
