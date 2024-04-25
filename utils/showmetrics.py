@@ -136,7 +136,7 @@ def showDataByDayabase(df, dfMonday, id_casa, nome_casa):
         else:
             st.markdown('Cadastro <span style="color:red">INCOMPLETO</span>', unsafe_allow_html=True)
     with col5: # verifica se a casas exige nota fiscal
-        if df['NOTA_FISCAL'].empty or pd.isna(df['NOTA_FISCAL'].iloc[0]):
+        if df['NOTA_FISCAL'].empty or df['NOTA_FISCAL'].iloc[0] == 0:
             st.write('Casa não exige nota fiscal')
         else:
             st.write('Casa exige nota fiscal')
