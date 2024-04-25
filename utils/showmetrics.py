@@ -20,7 +20,7 @@ def getHunterData(df):
                                 'Cliente irá atuar de forma independente?',
                                 'Propostas lançadas?','Cadastro/Onboarding de artistas', 'Observação Hunting', 'Hunter Responsável']]
 
-# colocar dados pertinentes para Farmer
+#retorna um dataframe somente com os dados para hunter
 def getFarmerData(df):
     return df[['ID EPM', 'Nome', 'Relevância do cliente',
                                'Nome contratante', 'E-mail do contratante',
@@ -35,6 +35,15 @@ def getFarmerData(df):
                                 'Volume (qts gigs a eshows terá na casa?)',
                                 'Cliente irá atuar de forma independente?',
                                 'Propostas lançadas?','Cadastro/Onboarding de artistas', 'Observação Hunting', 'Hunter Responsável', 'Farmer']]
+
+#retorna um dataframe somente com os dados para Implantação
+def getImplantacaoData(df):
+    return df[['ID EPM', 'Nome', 'Relevância do cliente',
+                               'Nome contratante', 'E-mail do contratante',
+                               'Cidade do Estabelecimento', 'Cadastro de show padrão',
+                               'Recebi programação do Hunter?', 'Criar perfil Espaces', 'Ativou controladoria? (ativar três dias antes)',
+                               'Observação Hunting', 'Login criado?', 'Volume (qts gigs a eshows terá na casa?)', 'Início da parceria',
+                               'Cadastro/Onboarding de artistas']]
 
 #procura um item parado, para verificação
 def checkStopedItens(df):
