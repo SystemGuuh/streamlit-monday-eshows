@@ -110,6 +110,3 @@ def getRadarDataFromLocal():
 def renameColumns(df):
     df = df.rename(columns={'Volume (qts gigs a eshows terá na casa?)': 'Volume'})
     return df
-
-
-
