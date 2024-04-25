@@ -19,9 +19,8 @@ if  not radarMondaydf.empty:
         df = radarMondaydf[radarMondaydf['Hunter Responsável'] == filterHunter].reset_index(drop=True)
         st.dataframe(df, hide_index=True)
 
-        aux = radarMondaydf[radarMondaydf['Hunter Responsável'] == filterHunter]
-        if(checkStopedItens(aux)):
-            findAndPrintStopedItens(radarMondaydf[radarMondaydf['Hunter Responsável'] == filterHunter])
+        if(checkStopedItens(df)):
+            findAndPrintStopedItens(df)
         else:
             st.success("Parece que tudo está completo no radar das suas casas!")
 

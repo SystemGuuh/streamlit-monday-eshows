@@ -20,11 +20,26 @@ def getHunterData(df):
                                 'Cliente irá atuar de forma independente?',
                                 'Propostas lançadas?','Cadastro/Onboarding de artistas', 'Observação Hunting', 'Hunter Responsável']]
 
+# colocar dados pertinentes para Farmer
+def getFarmerData(df):
+    return df[['ID EPM', 'Nome', 'Relevância do cliente',
+                               'Nome contratante', 'E-mail do contratante',
+                               'Cidade do Estabelecimento', 'GMV estimado',
+                               'Início da parceria', 'Tipo de negociação', 'Carência?',
+                               'Carência até (data)', 'Formulário Hub', 'Grupo no Whatsapp',
+                                'Companie criado?', 'Criação da marca', 'Login criado?',
+                                'Cadastro de show padrão',
+                                'Coletar contatos de artista', 'Coletar programação',
+                                'Recebi programação do Hunter?',
+                                'Estrutura da programação (dias da semana)',
+                                'Volume (qts gigs a eshows terá na casa?)',
+                                'Cliente irá atuar de forma independente?',
+                                'Propostas lançadas?','Cadastro/Onboarding de artistas', 'Observação Hunting', 'Hunter Responsável', 'Farmer']]
 
 #procura um item parado, para verificação
 def checkStopedItens(df):
     try:
-        for coluna in df.columns[11:24]:
+        for coluna in df.columns:
             for indice, valor in df[coluna].items():
                 if str(valor).lower() == 'parado':
                     return True
