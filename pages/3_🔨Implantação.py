@@ -20,7 +20,7 @@ if  not radarMondaydf.empty:
 
 
         if(checkStopedItens(df)):
-            printStopedItens(df)
+            findAndPrintStopedItens(df)
         else:
             st.success("Parece que tudo completo no radar dessa casas!")
 
