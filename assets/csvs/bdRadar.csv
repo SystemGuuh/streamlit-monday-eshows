@@ -7,12 +7,12 @@ ID_CASA,CASA,PRIMEIRO_SHOW,PROXIMA_OPORTUNIDADE_EM_ANDAMENTO,CASTING_CADASTRADO,
 1435,São Arnulfo Pub,,,0,1,1,1,Implantação,0
 1434,developer eshows,,,0,0,0,0,Implantação,0
 1433,teste figuer ,,,0,0,0,0,Implantação,1
-1428,Frederico Beira Mar,2024-04-19 19:00:00,2024-04-25 19:00:00,0,1,1,1,Implantação,0
+1428,Frederico Beira Mar,2024-04-19 19:00:00,2024-04-25 19:00:00,0,1,1,2,Implantação,1
 1427,SALVADOR,,,0,0,0,0,Implantação,0
 1416,A casa teste,,,0,1,1,0,Implantação,1
 1415,Tatuzinho Pompeia,2024-04-17 19:00:00,2024-04-25 19:00:00,0,1,1,0,Implantação,1
-1414,SpotMarkt - Córrego Grande,2024-05-01 20:00:00,,10,1,0,1,Implantação,1
-1413,SpotMarkt - São José,2024-05-02 19:30:00,2024-05-10 19:30:00,10,1,0,1,Implantação,1
+1414,SpotMarkt - Córrego Grande,2024-05-01 20:00:00,2024-05-04 20:00:00,10,1,0,1,Implantação,1
+1413,SpotMarkt - São José,2024-04-30 19:30:00,2024-05-10 19:30:00,10,1,0,1,Implantação,1
 1407,Bota Restaurante,2024-04-19 19:00:00,,0,1,1,2,Implantação,1
 1402,La Braciera Pizzaria - Morumbi,2024-04-19 19:30:00,2024-04-27 19:30:00,0,1,1,1,Implantação,1
 1389,Espeto Lounge,,,0,1,0,1,Implantação,0
@@ -31,7 +31,7 @@ ID_CASA,CASA,PRIMEIRO_SHOW,PROXIMA_OPORTUNIDADE_EM_ANDAMENTO,CASTING_CADASTRADO,
 1297,Rusticão Bar,,,1,0,0,1,Implantação,0
 1296,Coco Bambu Plaza Sul,2024-04-26 17:00:00,2024-04-29 17:00:00,0,1,0,3,Implantação,1
 1294,Pobre Juan - Belém,2024-05-15 19:00:00,2024-04-26 19:00:00,0,1,0,2,Implantação,1
-1293,Porks Brooklin,2024-03-15 20:00:00,2024-04-26 19:30:00,0,1,1,0,Implantação,0
+1293,Porks Brooklin,2024-03-15 20:00:00,,0,1,1,0,Implantação,0
 1292,Disk me Disse,2024-04-09 19:00:00,,3,1,1,1,Implantação,0
 1291,Estaleiro,,,0,1,0,1,Implantação,0
 1289,Compa,2024-05-02 19:00:00,2024-05-02 19:00:00,0,1,1,0,Implantação,0
