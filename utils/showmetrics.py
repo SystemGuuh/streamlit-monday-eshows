@@ -60,35 +60,37 @@ def checkStopedItens(df):
 #printa os itens marcados com parado
 def findAndPrintStopedItens(df):
     df = df.reset_index(drop=True)
-    stopedItensCount = []
-    stopedItensValues = []
+    pendencies = {}
 
     #calcula campos parados
     for indice, linha in df.iterrows():
         valor_anterior = None
         count =0
+        name = linha['Nome']
+
+        if name not in pendencies:
+            pendencies[name] = {
+                "stopedItensCount": 0,
+                "stopedItensValues": []
+            }
+
         for coluna in df.columns:
-            valor = linha[coluna]
-            if valor is None or str(valor) == '':
-                nome = linha['Nome']
-                stopedItensValues.append(f'"**{nome}**" está com o campo "**{coluna}**" vazio e precisa ser preenchido.\n')
+            valor = str(linha[coluna])
+            if valor is None or str(valor) == '' and valor_anterior != 'não aplica':
+                pendencies[name]["stopedItensValues"].append(f'"{name}" está com o campo "{coluna}" vazio e precisa ser preenchido.\n')
                 count += 1
-                valor_anterior = None
-                continue
             elif str(valor).lower() == 'parado' and valor_anterior != 'não aplica':
-                nome = linha['Nome']
-                stopedItensValues.append(f'"**{nome}**" está com o campo "**{coluna}**" parado.\n')
+                name = linha['Nome']
+                pendencies[name]["stopedItensValues"].append(f'"{name}" está com o campo "{coluna}" parado.\n')
                 count += 1
             valor_anterior = valor.lower()
-        stopedItensCount.append(count)
+        pendencies[name]["stopedItensCount"] = count
 
     #printa campos parados
-    aux = 0
-    for indice, linha in df.iterrows():
-        if stopedItensCount[indice] > 0:
-            with st.expander(f"⚠️ **{linha['Nome']}**: {stopedItensCount[indice]} itens pendentes"):
-                st.write('\n'.join(map(str, stopedItensValues[aux:stopedItensCount[indice]])))
-            aux = stopedItensCount[indice]
+    for name, pendencie in pendencies.items():
+        if pendencie["stopedItensCount"] > 0:
+            with st.expander(f"⚠️ **{name}**: {pendencies[name]['stopedItensCount']} itens pendentes"):
+                st.write('\n'.join(pendencies[name]["stopedItensValues"]))
 
 #mostra dados de acordo com o bando de dados e monday
 def showDataByDayabase(df, dfMonday, id_casa, nome_casa):
