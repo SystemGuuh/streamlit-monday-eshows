@@ -1,7 +1,7 @@
 import streamlit as st
 from utils.showmetrics import *
 
-st.set_page_config(page_title="Monday Hunter Data", page_icon="🏹")
+st.set_page_config(page_title="Monday Hunter Data", page_icon="🏹", layout="wide",)
 col1, col2 = st.columns([4,1])
 col1.markdown(f"# Radar de implantação e estabilização")
 col2.image("./assets/imgs/eshows-logo.png", width=100)
