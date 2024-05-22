@@ -63,7 +63,7 @@ def getMondayDataframe():
         df = pd.DataFrame(processDataFromARequest())
 
         #removing ID EPM without value
-        df['ID EPM'] = df['ID EPM'].replace('', pd.NA)
+        df['ID EPM'] = df['ID EPM'].replace('-', pd.NA)
         df = df.dropna(subset=['ID EPM'])
 
         return df

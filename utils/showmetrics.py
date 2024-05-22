@@ -92,7 +92,7 @@ def findAndPrintStopedItens(df):
             with st.expander(f"⚠️ **{name}**: {pendencies[name]['stopedItensCount']} itens pendentes"):
                 st.write('\n'.join(pendencies[name]["stopedItensValues"]))
 
-#mostra dados de acordo com o bando de dados e monday
+#mostra dados de acordo com o banco de dados e monday
 def showDataByDayabase(df, dfMonday, id_casa, nome_casa):
     controladoria=None
     day=None; day2=None
@@ -174,7 +174,7 @@ def showDataByDayabase(df, dfMonday, id_casa, nome_casa):
             if (remainingDays < 0):
                 st.error(f"Estamos atrasados para lançar o show, foi há {-1 * remainingDays} dias.")
             elif (remainingDays == 0):
-                st.error(f"O show vai ocorrer hoje, precisamos lanaçar no bando de dados.")
+                st.error(f"O show vai ocorrer hoje, precisamos lançar no banco de dados.")
             else:
                 st.error(f"Opa, parece que o primeiro show não foi lançado ainda! Faltam {remainingDays} dias.")
 
