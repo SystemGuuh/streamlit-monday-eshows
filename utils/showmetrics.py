@@ -18,7 +18,7 @@ def getHunterData(df):
                                 'Estrutura da programação (dias da semana)',
                                 'Volume (qts gigs a eshows terá na casa?)',
                                 'Cliente irá atuar de forma independente?',
-                                'Propostas lançadas?','Cadastro/Onboarding de artistas', 'Observação Hunting', 'Hunter Responsável']]
+                                'Propostas lançadas?','Cadastro/Onboarding de artistas', 'Observação', 'Hunter Responsável']]
 
 #retorna um dataframe somente com os dados para hunter
 def getFarmerData(df):
@@ -34,7 +34,7 @@ def getFarmerData(df):
                                 'Estrutura da programação (dias da semana)',
                                 'Volume (qts gigs a eshows terá na casa?)',
                                 'Cliente irá atuar de forma independente?',
-                                'Propostas lançadas?','Cadastro/Onboarding de artistas', 'Observação Hunting', 'Hunter Responsável', 'Farmer']]
+                                'Propostas lançadas?','Cadastro/Onboarding de artistas', 'Observação', 'Hunter Responsável', 'Farmer']]
 
 #retorna um dataframe somente com os dados para Implantação
 def getImplantacaoData(df):
@@ -42,7 +42,7 @@ def getImplantacaoData(df):
                                'Nome contratante', 'E-mail do contratante',
                                'Cidade do Estabelecimento', 'Cadastro de show padrão',
                                'Recebi programação do Hunter?', 'Criar perfil Espaces', 'Ativou controladoria? (ativar três dias antes)',
-                               'Observação Hunting', 'Login criado?', 'Volume (qts gigs a eshows terá na casa?)', 'Início da parceria',
+                               'Observação', 'Login criado?', 'Volume (qts gigs a eshows terá na casa?)', 'Início da parceria',
                                'Cadastro/Onboarding de artistas']]
 
 #procura um item parado, para verificação
