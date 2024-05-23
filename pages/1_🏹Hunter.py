@@ -31,8 +31,9 @@ if  not radarMondaydf.empty:
                 showDataByDayabase(cleanBdDataUsingMonday(radarMondaydf, getRadarDataFromLocal()), radarMondaydf[radarMondaydf['Nome'] == filterHause],df.loc[df['Nome'] == filterHause, 'ID EPM'].iloc[0], filterHause)
             with tab2:
                 stringObs = radarMondaydf.loc[radarMondaydf['Nome'] == filterHause, 'Observação'].astype(str).iloc[0]
-                st.markdown("#### Observação do hunter:")
-                st.info(stringObs)
+                if stringObs is not None:
+                    st.markdown("#### Observação do hunter:")
+                    st.info(stringObs)
                 showMissingRegisterValuesFromDatabase(radarMondaydf.loc[radarMondaydf['Nome'] == filterHause, 'ID EPM'].astype(int).iloc[0])
 
         else:

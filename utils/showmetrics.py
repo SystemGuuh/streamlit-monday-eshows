@@ -129,7 +129,6 @@ def showDataByDayabase(df, dfMonday, id_casa, nome_casa):
             statusCompny = getStatusCompany(id_casa_str)
             st.write('Status:', str(statusCompny['status'].iloc[0]))
 
-
     col4, col5, col6 = st.columns(3)
     with col4: # mostra completo caso nao tenha nada faltando no cadastro
         tempdf = pd.DataFrame(getMissingRegisterValue(id_casa))
